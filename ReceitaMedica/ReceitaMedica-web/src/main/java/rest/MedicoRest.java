@@ -23,7 +23,7 @@ public class MedicoRest extends HttpServlet {
 	
 	@Inject
 	private MedicoDAO medicoDAO;
-
+//para acessar o servico : http://localhost:10080/ReceitaMedica-web/servico
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
