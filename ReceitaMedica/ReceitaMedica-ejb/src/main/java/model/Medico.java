@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name="medicos")
 public class Medico implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@Column(name="CRM_MEDICO")
 	private int crmMedico;
