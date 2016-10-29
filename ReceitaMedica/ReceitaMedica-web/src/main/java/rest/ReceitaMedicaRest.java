@@ -16,9 +16,9 @@ import org.json.JSONObject;
 import model.Medico;
 import service.MedicoService;
 
-@WebServlet(name = "ReceitaMedicaWSS", urlPatterns = { "/servico" })
+@WebServlet(name = "ReceitaMedicaWS", urlPatterns = { "/receitaMedica" })
 
-public class MedicoRest extends HttpServlet {
+public class ReceitaMedicaRest extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,18 +28,23 @@ public class MedicoRest extends HttpServlet {
 	@Inject 
 	MedicoService medicoService;
 
-//para acessar o servico : http://localhost:10080/ReceitaMedica-web/servico
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		try (PrintWriter out = response.getWriter()) {          
-            out.println("Medico listando medicos!!");
-            
-			retornarMedicoTeste(out);
-            /*criarMedico(request);            
-            salvar(medico);*/
-            
+			JSONArray listaRest = new JSONArray();
+
+			Medico m = new Medico();
+			m.setCrmMedico(123456);
+			m.setNmMedico("Higor");
+			
+			JSONObject jo = new JSONObject();
+			jo.put("medico", m.getNmMedico());
+			jo.put("crm", m.getCrmMedico());
+			
+			listaRest.put(jo);
+			System.out.println(listaRest.toString());
 
             
 		}catch(IOException iex){
