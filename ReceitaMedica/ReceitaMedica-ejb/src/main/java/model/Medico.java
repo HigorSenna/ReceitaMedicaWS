@@ -2,10 +2,13 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.util.List;
 
 @Entity
 @Table(name="medicos")
+@XmlRootElement
 public class Medico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -16,7 +19,7 @@ public class Medico implements Serializable {
 	@Column(name="NM_MEDICO")
 	private String nmMedico;
 
-	@OneToMany(mappedBy="medico")
+	@OneToMany(mappedBy="medico",fetch=FetchType.EAGER)
 	private List<ReceitasMedica> receitasMedicas;
 
 	public Medico() {

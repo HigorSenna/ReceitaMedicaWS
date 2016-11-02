@@ -1,9 +1,13 @@
 package service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 import DAO.MedicoDAO;
 import model.Medico;
@@ -16,7 +20,18 @@ public class MedicoService implements Serializable{
 	@Inject
 	private MedicoDAO medicoDAO;
 	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void salvar(Medico medico) throws Exception{
 		medicoDAO.salvar(medico);
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<Medico> buscarTodos() throws Exception{
+		return medicoDAO.buscarTodos();
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public Medico buscarPorCrm(int CRM) throws NoResultException{
+		return medicoDAO.buscarPorCRM(CRM);
 	}
 }
