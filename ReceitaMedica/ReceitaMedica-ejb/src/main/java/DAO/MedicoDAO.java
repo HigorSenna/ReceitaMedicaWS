@@ -7,7 +7,7 @@ import javax.persistence.Query;
 import br.com.commons.ejb.dao.GenericoDAO;
 import model.Medico;
 
-public class MedicoDAO extends GenericoDAO<Medico, Integer>{
+public class MedicoDAO extends GenericoDAO<Medico, String>{
 
 	private static final long serialVersionUID = 1L;
 	
