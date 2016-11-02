@@ -36,7 +36,15 @@ public class MedicoRest extends Application implements Serializable{
 	public String buscarMedicos() throws Exception{
 		List<Medico> medicosRetornados = medicoService.buscarTodos();	    
 		return getJsonIdentado(medicosRetornados);
-	}	
+	}
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/medicoCRM")
+	public String buscarMedico(@QueryParam(ParamUtils.CRM) String crm) throws Exception{
+		Medico m = medicoService.buscarPorCrm(crm);
+		return getJsonIdentado(m);
+	}
 	
 	@GET
 	@Path("/criar")

@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
 import enums.TipoMensagemEnum;
 import model.Medico;
@@ -22,6 +24,7 @@ public class CadastroMedicoController implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private static final String CADASTRO_MEDICO = "ServicoMedico/medico/criar";
+	private static final String BUSCAR_MEDICO = "ServicoMedico/medico/medicoCRM";
 	
 	@Inject
 	private Medico medico;
@@ -29,15 +32,19 @@ public class CadastroMedicoController implements Serializable{
 	@Inject 
 	MedicoService medicoService;
 	
+	private Client client;
+	private WebResource webResource;
+	private ClientResponse response;
+	
 	public void cadastrarMedico(){
 		if(!isMedicoExistente()){
-			Client cliente = ClientBuilder.newClient();
-			try {			
-				cliente.target(UrlUtils.getURL(CADASTRO_MEDICO))
-				.queryParam(ParamUtils.NOME_MEDICO, medico.getNmMedico())
-				.queryParam(ParamUtils.CRM, medico.getCrmMedico())
-				.request()
-				.get();
+			client = Client.create();
+			try {		
+				client.resource(UrlUtils.getURL(CADASTRO_MEDICO))
+						.queryParam(ParamUtils.NOME_MEDICO, medico.getNmMedico())
+						.queryParam(ParamUtils.CRM, medico.getCrmMedico())
+						.accept("application/json")
+						.get(ClientResponse.class);
 				
 				MessagesUtils.exibirMensagemRedirect("Medico cadastrado com sucesso", "cadastro.xhtml", TipoMensagemEnum.SUCESSO);
 				
@@ -51,13 +58,17 @@ public class CadastroMedicoController implements Serializable{
 	}
 	
 	private boolean isMedicoExistente(){
-		Medico med;
+		String json = null;
+		client = Client.create();
+		webResource = client.resource(UrlUtils.getURL(BUSCAR_MEDICO))
+				.queryParam(ParamUtils.CRM, medico.getCrmMedico());		
 		try {
-			med = medicoService.buscarPorCrm(medico.getCrmMedico());
+			response = webResource.accept("application/json").get(ClientResponse.class);
+			json = response.getEntity(String.class);			
 		} catch (Exception e) {
 			return true;
 		}
-		return med != null;
+		return !json.equals("null");
 	}
 
 	public Medico getMedico() {
