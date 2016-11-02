@@ -12,31 +12,24 @@
 
 			<h1 style="width: 100%; text-align: center;">Cadastro de Receita Médica</h1>
 
-			<h:form prependId="false" id="formularioCadastroMaterial">
+			<h:form prependId="false" id="formularioCadastroReceitaMedica">
 	
 				<br /> <br /> <br />
 	
 				<div class="form-group row">
 					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label>
 					<div class="col-xs-10">
-						<h:inputText class="form-control" type="text" value="CPF PACIENTE"
-							id="example-text-input" style="width: 50%;"/>
+						<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}"
+							id="example-text-input" style="width: 50%;" maxlength="11" />
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="example-search-input" class="col-xs-2 col-form-label">CRM Médico</label>
 					<div class="col-xs-10">
 						<h:inputText class="form-control"
-							value="CRM MEDICO" id="example-search-input" style="width: 50%;">
+							value="#{cadastroReceitaController.receitaMedica.medico.crmMedico}" id="example-search-input" style="width: 50%;" maxlength="11">
 							
 						</h:inputText>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="example-email-input" class="col-xs-2 col-form-label">Data</label>
-					<div class="col-xs-10">
-						<h:inputText class="form-control"
-							value="DATA CADASTRO RECEITA(NEW DATE)" id="example-email-input" style="width: 50%;"/>
 					</div>
 				</div>
 				
