@@ -6,6 +6,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.json.JSONObject;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -64,6 +66,18 @@ public class CadastroPacienteController implements Serializable{
 		} catch (Exception e) {
 			return true;
 		} 
+		
+		//JSONObject jsonObj = new JSONObject(json);
+
+		 // Get 'libraryname' ...
+
+		 //String libraryName = jsonObj.getString(ParamUtils.NOME_PACIENTE);
+
+		 // Get 'mymusic' details ...
+
+		 /*final JSONArray music = json.getJSONArray("mymusic");
+		 final JSONObject entry = music.get(0);
+		 final String song = entry.getString("song");*/
 		
 		return !json.equals("null");
 	}
