@@ -51,7 +51,12 @@ public class CadastroMedicoController implements Serializable{
 	}
 	
 	private boolean isMedicoExistente(){
-		Medico med = medicoService.buscarPorCrm(medico.getCrmMedico());
+		Medico med;
+		try {
+			med = medicoService.buscarPorCrm(medico.getCrmMedico());
+		} catch (Exception e) {
+			return true;
+		}
 		return med != null;
 	}
 

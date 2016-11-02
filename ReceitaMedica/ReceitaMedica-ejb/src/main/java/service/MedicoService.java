@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 import DAO.MedicoDAO;
 import model.Medico;
@@ -31,7 +30,7 @@ public class MedicoService implements Serializable{
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public Medico buscarPorCrm(int CRM) throws NoResultException{
+	public Medico buscarPorCrm(int CRM) throws Exception{
 		return medicoDAO.buscarPorCRM(CRM);
 	}
 }
