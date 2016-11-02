@@ -32,6 +32,12 @@ public class ReceitasMedica implements Serializable {
 	@JoinColumn(name="CPF_PACIENTE")
 	private Paciente paciente;
 
+	public ReceitasMedica(Date data, String flStatus) {
+		super();
+		this.data = data;
+		this.flStatus = flStatus;
+	}
+
 	public ReceitasMedica() {
 	}
 
