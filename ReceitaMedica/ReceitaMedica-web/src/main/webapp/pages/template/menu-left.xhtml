@@ -40,12 +40,12 @@
 			</a>
 		</li>
 		<li>
-			<a href="javascript:;" data-toggle="collapse" data-target="#demo">
+			<a href="javascript:;" data-toggle="collapse" data-target="#medico">
 				<i class="fa fa-fw fa-arrows-v"></i> 
 				Medico
 				<i class="fa fa-fw fa-caret-down"></i>
 			</a>
-			<ul id="demo" class="collapse">
+			<ul id="medico" class="collapse">
 				<li>
 					<h:link outcome="/pages/receita/cadastro.xhtml">
 						Cadastrar Receita
@@ -61,10 +61,25 @@
 			</ul>
 		</li>
 		<li>
-			<a href="blank-page.html">
-				<i class="fa fa-fw fa-file"></i>
-				Blank Page
+			<a href="javascript:;" data-toggle="collapse" data-target="#paciente">
+				<i class="fa fa-fw fa-arrows-v"></i> 
+				Paciente
+				<i class="fa fa-fw fa-caret-down"></i>
 			</a>
+			<ul id="paciente" class="collapse">
+				<li>
+					<h:link outcome="/pages/paciente/cadastro.xhtml">
+						Cadastrar Paciente
+					</h:link>
+						
+				</li>
+				
+				<li>
+				<h:link outcome="/pages/medico/cadastro.xhtml">
+						Consultar Receita
+				</h:link>
+				</li>
+			</ul>
 		</li>
 		<li>
 			<a href="index-rtl.html">

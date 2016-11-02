@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="../template/template.xhtml">
+
+	<ui:define name="corpoPagina">
+		<div id="divCadastroMaterial">
+			<p:messages id="message" showDetail="true" closable="true" />
+
+			<h1 style="width: 100%; text-align: center;">Cadastro de Paciente</h1>
+
+			<h:form prependId="false" id="formularioCadastroMaterial">
+	
+				<br /> <br /> <br />
+	
+				<div class="form-group row">
+					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label>
+					<div class="col-xs-10">
+						<h:inputText class="form-control" type="text" value="CPF PACIENTE"
+							id="example-text-input" style="width: 50%;"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-xs-2 col-form-label">Nome Paciente</label>
+					<div class="col-xs-10">
+						<h:inputText class="form-control"
+							value="CRM MEDICO" id="example-search-input" style="width: 50%;">
+							
+						</h:inputText>
+					</div>
+				</div>
+				
+				<h:commandButton class="btn btn-success" value="Cadastrar Paciente" id="botaoCadastroReceita" action="#{cadastroMedicoController.call()}" />
+			</h:form>
+		</div>
+			
+	</ui:define>
+</ui:composition>
