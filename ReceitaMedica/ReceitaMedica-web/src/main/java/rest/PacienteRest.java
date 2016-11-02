@@ -27,7 +27,7 @@ public class PacienteRest extends Application implements Serializable{
 	@GET
 	@Path("/cadastroPaciente")
 	public void salvar(@QueryParam(ParamUtils.CPF) String CPF,@QueryParam(ParamUtils.NOME_PACIENTE) String nomePaciente) throws Exception{
-		paciente = new Paciente(Integer.parseInt(CPF),nomePaciente);
+		paciente = new Paciente(CPF,nomePaciente);
 		pacienteService.salvar(paciente);
 	}
 }

@@ -10,13 +10,17 @@ public class PacienteDAO extends GenericoDAO<Paciente, Integer> {
 
 	private static final long serialVersionUID = 1L;
 
-	public Paciente buscarPorCPF(int CPF) throws NoResultException {
+	public Paciente buscarPorCPF(String CPF) throws Exception{
 
-		String jpql = "SELECT p FROM Paciente p WHERE p.cpfPaciente =:cpfParam";
+		String jpql = "SELECT p FROM Paciente p WHERE p.cpfPaciente like :cpfParam";
 		Query q = (Query) getEntityManager().createQuery(jpql);
 		q.setParameter("cpfParam", CPF);
-
-		return (Paciente) q.getSingleResult();
+		
+		try {
+			Paciente paciente = (Paciente) q.getSingleResult();
+			return paciente;
+		} catch (NoResultException no) {
+			 return null;
+		}
 	}
-
 }

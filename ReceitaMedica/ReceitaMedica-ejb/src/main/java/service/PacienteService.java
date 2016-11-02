@@ -24,7 +24,7 @@ public class PacienteService implements Serializable{
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public Paciente buscarPorCPF(int CPF) throws Exception{
-		return pacienteDAO.buscarPor(CPF);
+	public Paciente buscarPorCPF(String CPF) throws Exception{
+		return pacienteDAO.buscarPorCPF(CPF);
 	}
 }

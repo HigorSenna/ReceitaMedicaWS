@@ -11,7 +11,7 @@ public class Paciente implements Serializable {
 
 	@Id
 	@Column(name="CPF_PACIENTE")
-	private int cpfPaciente;
+	private String cpfPaciente;
 
 	@Column(name="NM_PACIENTE")
 	private String nmPaciente;
@@ -19,7 +19,7 @@ public class Paciente implements Serializable {
 	@OneToMany(mappedBy="paciente")
 	private List<ReceitasMedica> receitasMedicas;
 	
-	public Paciente(int cpfPaciente, String nmPaciente) {
+	public Paciente(String cpfPaciente, String nmPaciente) {
 		this.cpfPaciente = cpfPaciente;
 		this.nmPaciente = nmPaciente;
 	}
@@ -27,11 +27,11 @@ public class Paciente implements Serializable {
 	public Paciente() {
 	}
 
-	public int getCpfPaciente() {
+	public String getCpfPaciente() {
 		return this.cpfPaciente;
 	}
 
-	public void setCpfPaciente(int cpfPaciente) {
+	public void setCpfPaciente(String cpfPaciente) {
 		this.cpfPaciente = cpfPaciente;
 	}
 
