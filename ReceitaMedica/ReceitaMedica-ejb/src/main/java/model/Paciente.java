@@ -2,6 +2,9 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -16,7 +19,8 @@ public class Paciente implements Serializable {
 	@Column(name="NM_PACIENTE")
 	private String nmPaciente;
 
-	@OneToMany(mappedBy="paciente")
+	@JsonIgnore
+	@OneToMany(mappedBy="paciente",fetch = FetchType.LAZY)
 	private List<ReceitasMedica> receitasMedicas;
 	
 	public Paciente(String cpfPaciente, String nmPaciente) {
