@@ -12,6 +12,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+
 import model.Medico;
 import service.MedicoService;
 import utils.ParamUtils;
@@ -30,9 +33,9 @@ public class MedicoRest extends Application implements Serializable{
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/medicos")
-	public List<Medico> buscarMedicos() throws Exception{
-		List<Medico> medicosRetornados = medicoService.buscarTodos();
-		return medicosRetornados;
+	public String buscarMedicos() throws Exception{
+		List<Medico> medicosRetornados = medicoService.buscarTodos();	    
+		return getJsonIdentado(medicosRetornados);
 	}	
 	
 	@GET
@@ -48,5 +51,11 @@ public class MedicoRest extends Application implements Serializable{
 	
 	private void salvar(Medico medico) throws Exception{
 		this.medicoService.salvar(medico);
+	}
+	
+	private String getJsonIdentado(Object elemento) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true); 
+	    return mapper.writeValueAsString(elemento);
 	}
 }
