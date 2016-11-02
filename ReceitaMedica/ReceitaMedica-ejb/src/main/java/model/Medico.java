@@ -16,7 +16,7 @@ public class Medico implements Serializable {
 	
 	@Id
 	@Column(name="CRM_MEDICO")
-	private int crmMedico;
+	private String crmMedico;
 
 	@Column(name="NM_MEDICO")
 	private String nmMedico;
@@ -28,11 +28,11 @@ public class Medico implements Serializable {
 	public Medico() {
 	}
 
-	public int getCrmMedico() {
+	public String getCrmMedico() {
 		return this.crmMedico;
 	}
 
-	public void setCrmMedico(int crmMedico) {
+	public void setCrmMedico(String crmMedico) {
 		this.crmMedico = crmMedico;
 	}
 

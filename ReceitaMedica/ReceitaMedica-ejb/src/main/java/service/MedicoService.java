@@ -30,7 +30,7 @@ public class MedicoService implements Serializable{
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-	public Medico buscarPorCrm(int CRM) throws Exception{
+	public Medico buscarPorCrm(String CRM) throws Exception{
 		return medicoDAO.buscarPorCRM(CRM);
 	}
 }

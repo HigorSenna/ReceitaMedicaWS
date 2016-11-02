@@ -11,13 +11,17 @@ public class MedicoDAO extends GenericoDAO<Medico, Integer>{
 
 	private static final long serialVersionUID = 1L;
 	
-	public Medico buscarPorCRM(int CRM) throws NoResultException{
+	public Medico buscarPorCRM(String CRM) throws Exception{
 		
-		String jpql = "SELECT m FROM Medico m WHERE m.crmMedico =:crmParam";
+		String jpql = "SELECT m FROM Medico m WHERE m.crmMedico like :crmParam";
 		Query q = (Query) getEntityManager().createQuery(jpql);
 		q.setParameter("crmParam", CRM);
 		
-		return (Medico) q.getSingleResult();
+		 try {
+			 Medico medico = (Medico) q.getSingleResult();
+			return medico;
+		} catch (NoResultException no) {
+			return null;
+		}
 	}
-
 }

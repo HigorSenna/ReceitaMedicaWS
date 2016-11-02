@@ -44,7 +44,7 @@ public class MedicoRest extends Application implements Serializable{
 		
 		medico = new Medico();
 		medico.setNmMedico(nomeMedico);
-		medico.setCrmMedico(Integer.parseInt(crm));
+		medico.setCrmMedico(crm);
 		
 		salvar(medico);
 	}	
