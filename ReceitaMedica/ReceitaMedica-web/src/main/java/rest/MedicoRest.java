@@ -20,9 +20,8 @@ import utils.ParamUtils;
 @ApplicationPath("/ServicoMedico")
 public class MedicoRest extends Application implements Serializable{
 
-	private static final long serialVersionUID = 1L;
-	
-	@Inject
+	private static final long serialVersionUID = 1L;	
+
 	private Medico medico;
 	
 	@Inject 
@@ -34,15 +33,17 @@ public class MedicoRest extends Application implements Serializable{
 	public List<Medico> buscarMedicos() throws Exception{
 		List<Medico> medicosRetornados = medicoService.buscarTodos();
 		return medicosRetornados;
-	}
+	}	
 	
 	@GET
 	@Path("/criar")
 	public void criarMedico(@QueryParam(ParamUtils.NOME_MEDICO) String nomeMedico,@QueryParam(ParamUtils.CRM) String crm) throws Exception{
-		this.medico.setNmMedico(nomeMedico);
-		this.medico.setCrmMedico(Integer.parseInt(crm));
 		
-		salvar(this.medico);
+		medico = new Medico();
+		medico.setNmMedico(nomeMedico);
+		medico.setCrmMedico(Integer.parseInt(crm));
+		
+		salvar(medico);
 	}	
 	
 	private void salvar(Medico medico) throws Exception{
