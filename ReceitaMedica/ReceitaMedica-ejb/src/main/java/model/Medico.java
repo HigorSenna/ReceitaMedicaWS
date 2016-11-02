@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -18,8 +20,9 @@ public class Medico implements Serializable {
 
 	@Column(name="NM_MEDICO")
 	private String nmMedico;
-
-	@OneToMany(mappedBy="medico",fetch=FetchType.EAGER)
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="medico",fetch=FetchType.LAZY)
 	private List<ReceitasMedica> receitasMedicas;
 
 	public Medico() {
