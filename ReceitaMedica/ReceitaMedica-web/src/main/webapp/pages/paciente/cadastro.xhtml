@@ -12,28 +12,24 @@
 
 			<h1 style="width: 100%; text-align: center;">Cadastro de Paciente</h1>
 
-			<h:form prependId="false" id="formularioCadastroMaterial">
+			<h:form prependId="false" id="formularioCadastroPaciente">
 	
 				<br /> <br /> <br />
 	
 				<div class="form-group row">
 					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label>
 					<div class="col-xs-10">
-						<h:inputText class="form-control" type="text" value="CPF PACIENTE"
-							id="example-text-input" style="width: 50%;"/>
+						<h:inputText value="#{cadastroPacienteController.paciente.cpfPaciente}" class="form-control" type="text" id="example-text-input" style="width: 50%;"/>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="example-search-input" class="col-xs-2 col-form-label">Nome Paciente</label>
 					<div class="col-xs-10">
-						<h:inputText class="form-control"
-							value="CRM MEDICO" id="example-search-input" style="width: 50%;">
-							
-						</h:inputText>
+						<h:inputText value="#{cadastroPacienteController.paciente.nmPaciente}" class="form-control" id="example-search-input" style="width: 50%;" />
 					</div>
 				</div>
 				
-				<h:commandButton class="btn btn-success" value="Cadastrar Paciente" id="botaoCadastroReceita" action="#{cadastroMedicoController.call()}" />
+				<h:commandButton class="btn btn-success" value="Cadastrar Paciente" id="botaoCadastroReceita" action="#{cadastroPacienteController.salvar()}" />
 			</h:form>
 		</div>
 			

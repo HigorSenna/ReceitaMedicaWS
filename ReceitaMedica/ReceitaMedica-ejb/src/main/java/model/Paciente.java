@@ -18,6 +18,11 @@ public class Paciente implements Serializable {
 
 	@OneToMany(mappedBy="paciente")
 	private List<ReceitasMedica> receitasMedicas;
+	
+	public Paciente(int cpfPaciente, String nmPaciente) {
+		this.cpfPaciente = cpfPaciente;
+		this.nmPaciente = nmPaciente;
+	}
 
 	public Paciente() {
 	}
