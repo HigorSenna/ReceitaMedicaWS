@@ -12,6 +12,7 @@ import enums.TipoMensagemEnum;
 import model.Medico;
 import utils.MessagesUtils;
 import utils.ParamUtils;
+import utils.UrlUtils;
 
 @ViewScoped
 @Named
@@ -19,13 +20,15 @@ public class CadastroMedicoController implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private static final String CADASTRO_MEDICO = "ServicoMedico/medico/criar";
+	
 	@Inject
 	private Medico medico;
 	
 	public void cadastrarMedico(){
 		Client cliente = ClientBuilder.newClient();
-		try {
-			cliente.target("http://localhost:10080/ReceitaMedica-web/ServicoMedico/medico/criar")
+		try {			
+			cliente.target(UrlUtils.getURL(CADASTRO_MEDICO))
 			.queryParam(ParamUtils.NOME_MEDICO, medico.getNmMedico())
 			.queryParam(ParamUtils.CRM, medico.getCrmMedico())
 			.request()
