@@ -36,17 +36,20 @@ public class CadastroMedicoController implements Serializable{
 	private WebResource webResource;
 	private ClientResponse response;
 	
-	public void cadastrarMedico(){
+	public String cadastrarMedico(){
+		String json = null;
 		if(!isMedicoExistente()){
 			client = Client.create();
 			try {		
-				client.resource(UrlUtils.getURL(CADASTRO_MEDICO))
+				response = client.resource(UrlUtils.getURL(CADASTRO_MEDICO))
 						.queryParam(ParamUtils.NOME_MEDICO, medico.getNmMedico())
 						.queryParam(ParamUtils.CRM, medico.getCrmMedico())
 						.accept("application/json")
 						.get(ClientResponse.class);
 				
-				MessagesUtils.exibirMensagemRedirect("Medico cadastrado com sucesso", "cadastro.xhtml", TipoMensagemEnum.SUCESSO);
+				json = response.getEntity(String.class);
+				
+				//MessagesUtils.exibirMensagemRedirect("Medico cadastrado com sucesso", "cadastro.xhtml", TipoMensagemEnum.SUCESSO);
 				
 			} catch (Exception e) {
 				MessagesUtils.exibirMensagemRedirect("Falha ao cadastrar médico", "cadastro.xhtml", TipoMensagemEnum.ERRO);
@@ -54,7 +57,9 @@ public class CadastroMedicoController implements Serializable{
 		}
 		else{
 			MessagesUtils.exibirMensagemRedirect("Médico ja existe", "cadastro.xhtml", TipoMensagemEnum.ERRO);
-		}		
+		}	
+		
+		return json;
 	}
 	
 	private boolean isMedicoExistente(){
@@ -66,6 +71,7 @@ public class CadastroMedicoController implements Serializable{
 			response = webResource.accept("application/json").get(ClientResponse.class);
 			json = response.getEntity(String.class);			
 		} catch (Exception e) {
+			MessagesUtils.exibirMensagemRedirect("Erro ao buscar", "cadastro.xhtml", TipoMensagemEnum.ERRO);
 			return true;
 		}
 		return !json.equals("null");

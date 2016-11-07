@@ -5,12 +5,15 @@ import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.core.MediaType;
 
-import org.json.JSONObject;
-
+import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 import enums.TipoMensagemEnum;
 import model.Paciente;
@@ -36,16 +39,18 @@ public class CadastroPacienteController implements Serializable{
 	
 	public void salvar(){
 		if(!isPacienteExistente()){
-			client = Client.create();
+	        client = Client.create();
 			try {
-				client.resource(UrlUtils.getURL(CADASTRO_PACIENTE))
-							.queryParam(ParamUtils.NOME_PACIENTE, paciente.getNmPaciente())
-							.queryParam(ParamUtils.CPF,paciente.getCpfPaciente())
-							.accept("application/json")
-							.get(ClientResponse.class);
+
+				Gson gson = new Gson();
+				String json = gson.toJson(paciente);
+				webResource = client.resource(UrlUtils.getURL(CADASTRO_PACIENTE));
+				response = webResource.type(MediaType.APPLICATION_JSON)
+							.post(ClientResponse.class,json);
 				
 				MessagesUtils.exibirMensagemRedirect("Paciente cadastrado com sucesso", "cadastro.xhtml", TipoMensagemEnum.SUCESSO);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				 MessagesUtils.exibirMensagemRedirect("Falha ao cadastrar paciente", "cadastro.xhtml", TipoMensagemEnum.ERRO);
 			}
 		}

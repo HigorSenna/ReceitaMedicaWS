@@ -16,24 +16,69 @@
 	
 				<br /> <br /> <br />
 	
-				<div class="form-group row">
-					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label>
-					<div class="col-xs-10">
-						<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}"
-							id="example-text-input" style="width: 50%;" maxlength="11" />
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="example-search-input" class="col-xs-2 col-form-label">CRM Médico</label>
-					<div class="col-xs-10">
-						<h:inputText class="form-control"
-							value="#{cadastroReceitaController.receitaMedica.medico.crmMedico}" id="example-search-input" style="width: 50%;" maxlength="11">
+<!-- 				<div class="form-group row"> -->
+<!-- 					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label> -->
+<!-- 					<div class="col-xs-10"> -->
+<!-- 						<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
+<!-- 							id="example-text-input" style="width: 50%;" maxlength="11" /> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="form-group row"> -->
+<!-- 					<label for="example-search-input" class="col-xs-2 col-form-label">CRM Médico</label> -->
+<!-- 					<div class="col-xs-10"> -->
+<!-- 						<h:inputText class="form-control" -->
+<!-- 							value="#{cadastroReceitaController.receitaMedica.medico.crmMedico}" id="example-search-input" style="width: 50%;" maxlength="11"> -->
 							
-						</h:inputText>
-					</div>
-				</div>
+<!-- 						</h:inputText> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				
-				<h:commandButton class="btn btn-success" value="Cadastrar" id="botaoCadastroReceita" action="#{cadastroMedicoController.call()}" />
+				<h:commandButton class="btn btn-success" value="Cadastrar" id="botaoCadastroReceita" action="#{cadastroReceitaController.salvar()}" />
+				<br/>
+				<br/>
+				<br/>
+				<div>
+<!-- 					<div class="form-group row"> -->
+<!-- 						<label for="numReceitaItem" class="col-xs-2 col-form-label">Numero Receita</label> -->
+<!-- 						<div class="col-xs-10"> -->
+<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.numReceita}" id="numReceitaItem"  -->
+<!-- 								style="width: 50%;" maxlength="11" disabled="true"> -->
+
+<!-- 							</h:inputText> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="form-group row"> -->
+<!-- 						<label for="instrucaoItemReceita" class="col-xs-2 col-form-label">Instrucao</label> -->
+<!-- 						<div class="col-xs-10"> -->
+<!-- 							<h:inputTextarea class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
+<!-- 								id="instrucaoItemReceita" style="width: 50%;" maxlength="11" /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+					
+<!-- 					<div class="form-group row"> -->
+<!-- 						<label for="nomeReceita" class="col-xs-2 col-form-label">Nome Receita</label> -->
+<!-- 						<div class="col-xs-10"> -->
+<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
+<!-- 								id="nomeReceita" style="width: 50%;" maxlength="11" /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+					
+<!-- 					<div class="form-group row"> -->
+<!-- 						<label for="usoReceita" class="col-xs-2 col-form-label">USO</label> -->
+<!-- 						<div class="col-xs-10"> -->
+<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
+<!-- 								id="usoReceita" style="width: 50%;" maxlength="11" /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+					
+<!-- 					<div class="form-group row"> -->
+<!-- 						<label for="contraIndicacao" class="col-xs-2 col-form-label">Contra-Indicação</label> -->
+<!-- 						<div class="col-xs-10"> -->
+<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
+<!-- 								id="contraIndicacao" style="width: 50%;" maxlength="11" /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+				</div>
 			</h:form>
 		</div>
 			

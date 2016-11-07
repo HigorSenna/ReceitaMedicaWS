@@ -2,7 +2,7 @@ package utils;
 
 public abstract class ParamUtils {
 	
-	public static final String DOMINIO = "http://localhost:10080/ReceitaMedica-web/";
+	public static final String DOMINIO = "http://localhost:8080/ReceitaMedica-web/";
 	
 	/*Medico*/
 	public static final String CRM = "crmMedico";
@@ -17,5 +17,7 @@ public abstract class ParamUtils {
 	public static final String FL_STATUS = "flStatus";
 	public static final String NUM_RECEITA = "numReceita";
 	public static final String DATA_RECEITA = "data";
+	
+	
 	
 }

@@ -17,6 +17,7 @@ import org.codehaus.jackson.map.SerializationConfig;
 
 import model.Medico;
 import service.MedicoService;
+import utils.MessagesWS;
 import utils.ParamUtils;
 
 @Path("/medico")
@@ -47,17 +48,25 @@ public class MedicoRest extends Application implements Serializable{
 	}
 	
 	@GET
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/criar")
-	public void criarMedico(@QueryParam(ParamUtils.NOME_MEDICO) String nomeMedico,@QueryParam(ParamUtils.CRM) String crm) throws Exception{
+	public MessagesWS criarMedico(@QueryParam(ParamUtils.NOME_MEDICO) String nomeMedico,@QueryParam(ParamUtils.CRM) String crm) {
 		
 		medico = new Medico();
 		medico.setNmMedico(nomeMedico);
 		medico.setCrmMedico(crm);
-		
-		salvar(medico);
+		MessagesWS mensagem = new MessagesWS();
+		try {
+			salvar(medico);
+			mensagem.setMessage("Medico inserido");
+			return mensagem;
+		} catch (Exception e) {
+			mensagem.setMessage("Falha ao salvar");
+			return mensagem;
+		}
 	}	
 	
-	private void salvar(Medico medico) throws Exception{
+	private void salvar(Medico medico) throws Exception {
 		this.medicoService.salvar(medico);
 	}
 	

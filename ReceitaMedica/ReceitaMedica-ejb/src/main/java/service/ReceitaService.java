@@ -1,6 +1,7 @@
 package service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -21,5 +22,10 @@ public class ReceitaService implements Serializable {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void salvar(ReceitasMedica receita) throws Exception{
 		receitaDAO.salvar(receita);
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<ReceitasMedica> buscarTodas() throws Exception{
+		return receitaDAO.buscarTodos();
 	}
 }

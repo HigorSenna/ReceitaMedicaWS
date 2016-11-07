@@ -2,6 +2,7 @@ package rest;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
@@ -9,6 +10,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 
 import enums.StatusReceitaEnum;
 import model.Medico;
@@ -51,6 +57,26 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		receitaMedica.setPaciente(paciente);
 		
 		return receitaMedica;
+	}
+	
+	public String buscarTodas(@QueryParam(ParamUtils.NUM_RECEITA) int numReceita,@QueryParam("list")String lista) throws Exception{
+		
+//		JSONArray ja = new JSONArray(lista);
+//		
+//		JSONObject jo = ja.get(0);
+//		
+//		 obj.setId( jo.getInt("id") );
+//		
+//		List<String> json = lista;
+//		return getJsonIdentado(json);
+		return null;
+		
+	}
+	
+	private String getJsonIdentado(Object elemento) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true); 
+	    return mapper.writeValueAsString(elemento);
 	}
 	
 }
