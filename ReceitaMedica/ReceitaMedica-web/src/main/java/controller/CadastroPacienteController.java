@@ -7,16 +7,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.json.JSONConfiguration;
 
 import enums.TipoMensagemEnum;
 import model.Paciente;
+import utils.JsonUtils;
 import utils.MessagesUtils;
 import utils.ParamUtils;
 import utils.UrlUtils;
@@ -41,9 +38,8 @@ public class CadastroPacienteController implements Serializable{
 		if(!isPacienteExistente()){
 	        client = Client.create();
 			try {
-
-				Gson gson = new Gson();
-				String json = gson.toJson(paciente);
+				String json = JsonUtils.parseJson(paciente);
+				
 				webResource = client.resource(UrlUtils.getURL(CADASTRO_PACIENTE));
 				response = webResource.type(MediaType.APPLICATION_JSON)
 							.post(ClientResponse.class,json);

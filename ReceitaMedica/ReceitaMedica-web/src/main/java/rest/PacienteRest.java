@@ -19,6 +19,7 @@ import org.primefaces.json.JSONObject;
 
 import model.Paciente;
 import service.PacienteService;
+import utils.JsonUtils;
 import utils.ParamUtils;
 
 @Path("/paciente")
@@ -37,7 +38,7 @@ public class PacienteRest extends Application implements Serializable{
 	@Path("/cadastroPaciente")
 	public void salvar(String pa) throws Exception{
 		
-		JSONObject jo = new JSONObject(pa);
+		JSONObject jo = JsonUtils.parseObject(pa);
 		paciente = new Paciente(jo.getString(ParamUtils.CPF),jo.getString(ParamUtils.NOME_PACIENTE));
 		
 //		List<String> json = lista;
