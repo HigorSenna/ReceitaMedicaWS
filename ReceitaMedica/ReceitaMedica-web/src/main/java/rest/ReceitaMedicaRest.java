@@ -1,32 +1,36 @@
 package rest;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jettison.json.JSONArray;
-import org.codehaus.jettison.json.JSONObject;
+import org.primefaces.json.JSONObject;
 
 import enums.StatusReceitaEnum;
+import model.ItemReceita;
 import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
 import service.MedicoService;
 import service.PacienteService;
 import service.ReceitaService;
+import utils.JsonUtils;
 import utils.ParamUtils;
 
-@Path("/ServicoReceitaMedica")
-@ApplicationPath("/receita")
+@ApplicationPath("/ServicoReceitaMedica")
+@Path("/receita")
 public class ReceitaMedicaRest extends Application implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -42,10 +46,26 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	
 	private ReceitasMedica receitaMedica;
 	
-	@GET
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/cadastroReceita")
-	public void salvar(@QueryParam(ParamUtils.CRM)String crmMedico,@QueryParam(ParamUtils.CPF)String cpfPaciente) throws Exception{
-		receitaService.salvar(getReceita(crmMedico, cpfPaciente));
+	public void salvar(String jsonReceita) throws Exception{
+		JSONObject obj = JsonUtils.parseObject(jsonReceita);
+		
+//		receitaService.salvar(getReceita(crmMedico, cpfPaciente));
+		System.out.println(obj);
+		
+	}
+	
+	private List<ItemReceita> getListItens(JSONObject objetoJson){
+		List<ItemReceita> itensReceita = new ArrayList<>();
+		ItemReceita item;
+		for(Object j : objetoJson.getJSONArray("itensReceitas")){
+			JSONObject jo = (JSONObject) j;
+			item = new ItemReceita();
+//			item.setContraIndicacao();
+		}
+		return null;
 	}
 	
 	private ReceitasMedica getReceita(String crmMedico,String cpfPaciente)throws Exception {

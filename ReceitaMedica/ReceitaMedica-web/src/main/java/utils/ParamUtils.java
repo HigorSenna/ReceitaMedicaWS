@@ -17,6 +17,7 @@ public abstract class ParamUtils {
 	public static final String FL_STATUS = "flStatus";
 	public static final String NUM_RECEITA = "numReceita";
 	public static final String DATA_RECEITA = "data";
+	public static final String CONTRA_INDICACAO = "contraIndicacao";
 	
 	
 	
