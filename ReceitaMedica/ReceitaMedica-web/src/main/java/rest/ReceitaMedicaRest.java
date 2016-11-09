@@ -63,6 +63,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		for(Object j : objetoJson.getJSONArray("itensReceitas")){
 			JSONObject jo = (JSONObject) j;
 			item = new ItemReceita();
+//			aa
 //			item.setContraIndicacao();
 		}
 		return null;
