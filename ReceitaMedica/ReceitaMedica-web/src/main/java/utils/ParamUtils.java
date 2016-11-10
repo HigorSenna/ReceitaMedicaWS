@@ -4,6 +4,11 @@ public abstract class ParamUtils {
 	
 	public static final String DOMINIO = "http://localhost:8080/ReceitaMedica-web/";
 	
+	public static final String MEDICO = "medico";
+	public static final String PACIENTE = "paciente";
+	public static final String RECEITA_MEDICA = "receita";
+	
+	
 	/*Medico*/
 	public static final String CRM = "crmMedico";
 	public static final String NOME_MEDICO = "nmMedico";
@@ -18,6 +23,10 @@ public abstract class ParamUtils {
 	public static final String NUM_RECEITA = "numReceita";
 	public static final String DATA_RECEITA = "data";
 	public static final String CONTRA_INDICACAO = "contraIndicacao";
+	public static final String USO = "uso";
+	public static final String REG_ANVISA = "regAnvisa";
+	public static final String NM_RECEITA = "nmReceita";
+	public static final String INSTRUCAO = "instrucao";
 	
 	
 	

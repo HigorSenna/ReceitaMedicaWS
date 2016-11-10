@@ -24,12 +24,12 @@ public class ReceitasMedica implements Serializable {
 	@OneToMany(mappedBy="receitasMedica")
 	private List<ItemReceita> itensReceitas;
 
-	@ManyToOne
-	@JoinColumn(name="CRM_MEDICO")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="CRM_MEDICO",insertable = true,updatable = true)
 	private Medico medico;
 
-	@ManyToOne
-	@JoinColumn(name="CPF_PACIENTE")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="CPF_PACIENTE",insertable = true,updatable = true)
 	private Paciente paciente;
 
 	public ReceitasMedica(Date data, String flStatus) {

@@ -16,6 +16,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import model.ItemReceita;
 import model.Medico;
+import model.Paciente;
 import model.ReceitasMedica;
 import utils.JsonUtils;
 import utils.UrlUtils;
@@ -41,18 +42,32 @@ public class CadastroReceitaController implements Serializable{
 	public void salvar(){
 		client = Client.create();
 		Medico m = new Medico();
-		m.setCrmMedico("13218");
+		m.setCrmMedico("8sadsfa76");
+		m.setNmMedico("NOME TESTE");
+		
+		Paciente p = new Paciente();
+		p.setCpfPaciente("518fdsaawq");
+		p.setNmPaciente("PACIENTE TESTE");		
+		
 		ReceitasMedica receita = new ReceitasMedica();		
 		receita.setItensReceitas(new ArrayList<ItemReceita>());
 		
-		receita.setNumReceita(185185);
 		receita.setMedico(m);
+		receita.setPaciente(p);
 		
 		ItemReceita item = new ItemReceita();
 		item.setContraIndicacao("Contraindicado em casos de suspetia de dengue");
 		item.setIdItem(0);
 		item.setInstrucao("Duas vezes ao dia");
 		item.setNmReceita("Receita medica");
+		
+		receita.getItensReceitas().add(item);
+		
+		item = new ItemReceita();
+		item.setContraIndicacao("Contraindicacao");
+		item.setIdItem(0);
+		item.setInstrucao("quatro vezes ao dia");
+		item.setNmReceita("Receita medica 2");
 		
 		receita.getItensReceitas().add(item);
 	
