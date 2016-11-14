@@ -55,14 +55,11 @@ public class MedicoRest extends Application implements Serializable{
 		medico = new Medico();
 		medico.setNmMedico(nomeMedico);
 		medico.setCrmMedico(crm);
-		MessagesWS mensagem = new MessagesWS();
 		try {
 			salvar(medico);
-			mensagem.setMessage("Medico inserido");
-			return mensagem;
+			return new MessagesWS("Medico inserido");
 		} catch (Exception e) {
-			mensagem.setMessage("Falha ao salvar");
-			return mensagem;
+			return new MessagesWS("Medico inserido");
 		}
 	}	
 	
