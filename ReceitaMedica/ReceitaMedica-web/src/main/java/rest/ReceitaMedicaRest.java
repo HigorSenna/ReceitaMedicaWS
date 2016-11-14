@@ -1,6 +1,8 @@
 package rest;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,11 +25,13 @@ import model.ItemReceita;
 import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
+import model.ReciboReceita;
 import service.ItemReceitaService;
 import service.MedicoService;
 import service.PacienteService;
 import service.ReceitaService;
 import utils.JsonUtils;
+import utils.MessagesWS;
 import utils.ParamUtils;
 
 @ApplicationPath("/ServicoReceitaMedica")
@@ -53,23 +57,29 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/cadastroReceita")
-	public void salvar(String jsonReceita){
-		JSONObject obj = JsonUtils.parseObject(jsonReceita);	
+	public ReciboReceita salvar(String jsonReceita){
+		JSONObject obj = JsonUtils.parseObject(jsonReceita);
+		ReceitasMedica receita = null;
 		try {
-			ReceitasMedica receita = getReceitaMedicoPaciente(obj);		
+			 receita = getReceitaMedicoPaciente(obj);		
 			receitaService.salvar(receita);
 			
 			List<ItemReceita> itensReceita = getListItens(obj,receita);
 			itemReceitaService.salvar(itensReceita);
 			
+			System.out.println(getJsonIdentado(receita));
+			
+			return new ReciboReceita(
+					receita.getMedico().getCrmMedico(), 
+					receita.getPaciente().getCpfPaciente(),
+					receita.getNumReceita(), 
+					new SimpleDateFormat("dd/MM/yyyy").format(receita.getData()), 
+					ParamUtils.MSG_CADASTRO_RECEITA);
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
+			return null; 
 		}
-		
-//		receita.setItensReceitas(itensReceita);
-		
-		System.out.println(obj);
-		
 	}
 	
 	private List<ItemReceita> getListItens(JSONObject objetoJson,ReceitasMedica receita){
@@ -122,17 +132,6 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		paciente.setNmPaciente(pacienteJson.getString(ParamUtils.NOME_PACIENTE));
 		
 		return paciente;
-	}
-	
-	private ReceitasMedica getReceita(String crmMedico,String cpfPaciente)throws Exception {
-		receitaMedica = new ReceitasMedica(new Date(),StatusReceitaEnum.ATIVA.getValor());
-		Medico medico = medicoService.buscarPorCrm(crmMedico);
-		Paciente paciente = pacienteService.buscarPorCPF(cpfPaciente);
-		
-		receitaMedica.setMedico(medico);
-		receitaMedica.setPaciente(paciente);
-		
-		return receitaMedica;
 	}
 	
 	public String buscarTodas(@QueryParam(ParamUtils.NUM_RECEITA) int numReceita,@QueryParam("list")String lista) throws Exception{

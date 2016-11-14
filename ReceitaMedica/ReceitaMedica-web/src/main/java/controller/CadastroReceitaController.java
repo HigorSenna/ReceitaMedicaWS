@@ -42,11 +42,11 @@ public class CadastroReceitaController implements Serializable{
 	public void salvar(){
 		client = Client.create();
 		Medico m = new Medico();
-		m.setCrmMedico("8sadsfa76");
+		m.setCrmMedico("9nfa76");
 		m.setNmMedico("NOME TESTE");
 		
 		Paciente p = new Paciente();
-		p.setCpfPaciente("518fdsaawq");
+		p.setCpfPaciente("5924510wq");
 		p.setNmPaciente("PACIENTE TESTE");		
 		
 		ReceitasMedica receita = new ReceitasMedica();		
@@ -78,6 +78,7 @@ public class CadastroReceitaController implements Serializable{
 		response = webResource.type(MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class,json);
 		
+		json = response.getEntity(String.class);
 		System.out.println(json);
 	}
 
