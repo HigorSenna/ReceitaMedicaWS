@@ -2,7 +2,7 @@ package utils;
 
 public abstract class ParamUtils {
 	
-	public static final String DOMINIO = "http://localhost:8080/ReceitaMedica-web/";
+	public static final String DOMINIO = "http://localhost:10080/ReceitaMedica-web/";
 	
 	public static final String MEDICO = "medico";
 	public static final String PACIENTE = "paciente";
@@ -27,6 +27,8 @@ public abstract class ParamUtils {
 	public static final String REG_ANVISA = "regAnvisa";
 	public static final String NM_RECEITA = "nmReceita";
 	public static final String INSTRUCAO = "instrucao";
+	
+	public static final String MSG_CADASTRO_RECEITA = "Receita médica disponível na base de dados do ministério da saúde";
 	
 	
 	
