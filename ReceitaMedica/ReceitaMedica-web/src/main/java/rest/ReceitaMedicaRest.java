@@ -17,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
-import org.hibernate.Hibernate;
 import org.primefaces.json.JSONObject;
 
 import enums.StatusReceitaEnum;
@@ -27,8 +26,6 @@ import model.Paciente;
 import model.ReceitasMedica;
 import model.ReciboReceita;
 import service.ItemReceitaService;
-import service.MedicoService;
-import service.PacienteService;
 import service.ReceitaService;
 import utils.JsonUtils;
 import utils.ParamUtils;
@@ -41,12 +38,6 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	
 	@Inject
 	private ReceitaService receitaService;
-	
-	@Inject
-	private PacienteService pacienteService;
-	
-	@Inject 
-	private MedicoService medicoService;
 	
 	@Inject
 	private ItemReceitaService itemReceitaService;
@@ -62,13 +53,13 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
 		
 		try {
-			ReceitasMedica  receita = receitaService.buscarPorNumero(numeroReceita);
-			List<ItemReceita> itensReceita = itemReceitaService.buscarPorNumReceita(numeroReceita);
-			receita.setItensReceitas(new ArrayList<ItemReceita>());
-			receita.getItensReceitas().addAll(itensReceita);
+			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
+			if(receitaMedica != null){
+				List<ItemReceita> itensReceita = itemReceitaService.buscarPorNumReceita(numeroReceita);
+				receitaMedica.setItensReceitas(itensReceita);
+			}
 			
-			System.out.println("receita : " + receita + "itensReceita " + itensReceita);
-			return receita;
+			return receitaMedica;
 		} catch (Exception e) {
 			return null;
 		}
