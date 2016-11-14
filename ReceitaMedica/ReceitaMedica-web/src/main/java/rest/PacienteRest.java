@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
@@ -20,6 +17,7 @@ import org.primefaces.json.JSONObject;
 import model.Paciente;
 import service.PacienteService;
 import utils.JsonUtils;
+import utils.MessagesWS;
 import utils.ParamUtils;
 
 @Path("/paciente")
@@ -34,26 +32,36 @@ public class PacienteRest extends Application implements Serializable{
 	private Paciente paciente;
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/cadastroPaciente")
-	public void salvar(String pa) throws Exception{
+	public MessagesWS salvar(String jsonPaciente){
 		
-		JSONObject jo = JsonUtils.parseObject(pa);
-		paciente = new Paciente(jo.getString(ParamUtils.CPF),jo.getString(ParamUtils.NOME_PACIENTE));
+		JSONObject obj = JsonUtils.parseObject(jsonPaciente);
+		Paciente pacienteParaSalvar = getPaciente(obj);
 		
-//		List<String> json = lista;
-//		return getJsonIdentado(json);
-//		paciente = new Paciente(CPF,nomePaciente);
-//		pacienteService.salvar(paciente);
-		System.out.println(paciente);
+		try {
+			if(hasPacienteComCPF(pacienteParaSalvar)){
+				return new MessagesWS("O paciente ja existe");
+			}
+			else{
+				pacienteService.salvar(pacienteParaSalvar);
+				return new MessagesWS("Paciente inserido com sucesso");
+			}
+		} catch (Exception e) {
+			return new MessagesWS("Falha ao inserir paciente");
+		}
+	}
+	private boolean hasPacienteComCPF(Paciente paciente) throws Exception{
+		Paciente pac = pacienteService.buscarPorCPF(paciente.getCpfPaciente());
+		return pac != null;
 	}
 	
-	@GET
-	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/pacienteCPF")
-	public String buscarPaciente(@QueryParam(ParamUtils.CPF)String CPF) throws Exception{
-		Paciente pac = pacienteService.buscarPorCPF(CPF);
-		return getJsonIdentado(pac);
+	private Paciente getPaciente(JSONObject objeto){
+		paciente = new Paciente();
+		paciente.setCpfPaciente(objeto.getString(ParamUtils.CPF));
+		paciente.setNmPaciente(objeto.getString(ParamUtils.NOME_PACIENTE));
+		
+		return paciente;
 	}
 	
 	private String getJsonIdentado(Object elemento) throws Exception{
