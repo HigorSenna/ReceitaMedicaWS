@@ -6,17 +6,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.hibernate.Hibernate;
-
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import model.ReceitasMedica;
-import utils.JsonUtils;
-import utils.ParamUtils;
 import utils.UrlUtils;
 
 @Named
@@ -80,11 +73,4 @@ public class ConsultaReceitaController implements Serializable{
 		}
 	
 	}
-	
-	private String getJsonIdentado(Object elemento) throws Exception{
-		ObjectMapper mapper = new ObjectMapper();
-	    mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true); 
-	    return mapper.writeValueAsString(elemento);
-	}
-
 }
