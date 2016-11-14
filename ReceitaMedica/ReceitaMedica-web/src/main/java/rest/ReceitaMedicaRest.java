@@ -1,7 +1,6 @@
 package rest;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
+import org.hibernate.Hibernate;
 import org.primefaces.json.JSONObject;
 
 import enums.StatusReceitaEnum;
@@ -31,7 +31,6 @@ import service.MedicoService;
 import service.PacienteService;
 import service.ReceitaService;
 import utils.JsonUtils;
-import utils.MessagesWS;
 import utils.ParamUtils;
 
 @ApplicationPath("/ServicoReceitaMedica")
@@ -53,6 +52,27 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	private ItemReceitaService itemReceitaService;
 	
 	private ReceitasMedica receitaMedica;
+	
+
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/buscarReceitaPorNumero")
+	public ReceitasMedica buscarPorNumero(String numReceita){
+		JSONObject obj = JsonUtils.parseObject(numReceita);
+		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
+		
+		try {
+			ReceitasMedica  receita = receitaService.buscarPorNumero(numeroReceita);
+			List<ItemReceita> itensReceita = itemReceitaService.buscarPorNumReceita(numeroReceita);
+			receita.setItensReceitas(new ArrayList<ItemReceita>());
+			receita.getItensReceitas().addAll(itensReceita);
+			
+			System.out.println("receita : " + receita + "itensReceita " + itensReceita);
+			return receita;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
