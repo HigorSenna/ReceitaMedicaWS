@@ -11,7 +11,6 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
@@ -26,6 +25,8 @@ import model.Paciente;
 import model.ReceitasMedica;
 import model.ReciboReceita;
 import service.ItemReceitaService;
+import service.MedicoService;
+import service.PacienteService;
 import service.ReceitaService;
 import utils.JsonUtils;
 import utils.MessagesWS;
@@ -42,6 +43,12 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	
 	@Inject
 	private ItemReceitaService itemReceitaService;
+	
+	@Inject
+	private MedicoService medicoService;
+	
+	@Inject
+	private PacienteService pacienteService;
 	
 	private ReceitasMedica receitaMedica;
 	
@@ -125,8 +132,13 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		JSONObject obj = JsonUtils.parseObject(jsonReceita);
 		ReceitasMedica receita = null;
 		try {
-			 receita = getReceitaMedicoPaciente(obj);		
-			receitaService.salvar(receita);
+			 receita = getReceitaMedicoPaciente(obj);
+			 if(hasPacienteCadastrado(getPaciente(obj)) || hasMedicoCadastrado(getMedico(obj))){
+				 receita = receitaService.atualizarRetornando(receita);
+			 }
+			 else{
+				 receitaService.salvar(receita);
+			 }
 			
 			List<ItemReceita> itensReceita = getListItens(obj,receita);
 			itemReceitaService.salvar(itensReceita);
@@ -166,7 +178,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		return itensReceita;
 	}
 	
-	private ReceitasMedica getReceitaMedicoPaciente(JSONObject objeto){
+	private ReceitasMedica getReceitaMedicoPaciente(JSONObject objeto) throws Exception{
 		ReceitasMedica receita = new ReceitasMedica();
 		
 		receita.setData(new Date());
@@ -178,17 +190,18 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		
 	}
 	
-	private Medico getMedico(JSONObject objeto){
-		Medico medico = new Medico();
-		
+	private Medico getMedico(JSONObject objeto) throws Exception{
+		Medico medico = null;
 		JSONObject medicoJson = objeto.getJSONObject(ParamUtils.MEDICO);		
+		
+		medico = new Medico();
 		medico.setNmMedico(medicoJson.getString(ParamUtils.NOME_MEDICO));
 		medico.setCrmMedico(medicoJson.getString(ParamUtils.CRM));
-		
+	
 		return medico;
 	}
 	
-	private Paciente getPaciente(JSONObject objeto){
+	private Paciente getPaciente(JSONObject objeto) throws Exception{
 		Paciente paciente = new Paciente();
 		
 		JSONObject pacienteJson = objeto.getJSONObject(ParamUtils.PACIENTE);
@@ -198,24 +211,19 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		return paciente;
 	}
 	
-	public String buscarTodas(@QueryParam(ParamUtils.NUM_RECEITA) int numReceita,@QueryParam("list")String lista) throws Exception{
-		
-//		JSONArray ja = new JSONArray(lista);
-//		
-//		JSONObject jo = ja.get(0);
-//		
-//		 obj.setId( jo.getInt("id") );
-//		
-//		List<String> json = lista;
-//		return getJsonIdentado(json);
-		return null;
-		
-	}
 	
 	private String getJsonIdentado(Object elemento) throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true); 
 	    return mapper.writeValueAsString(elemento);
+	}
+	
+	private boolean hasPacienteCadastrado(Paciente paciente) throws Exception{
+		return pacienteService.buscarPorCPF(paciente.getCpfPaciente()) != null;
+	}
+	
+	private boolean hasMedicoCadastrado(Medico medico) throws Exception{
+		return medicoService.buscarPorCrm(medico.getCrmMedico()) != null;
 	}
 	
 }

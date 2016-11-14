@@ -32,4 +32,8 @@ public class ReceitaDAO extends GenericoDAO<ReceitasMedica, Integer>{
 			return null;
 		}
 	}
+	
+	public ReceitasMedica atualizarRetornando(ReceitasMedica receita) throws Exception{
+		return getEntityManager().merge(receita);
+	}
 }
