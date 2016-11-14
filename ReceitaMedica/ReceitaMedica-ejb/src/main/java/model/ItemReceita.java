@@ -3,6 +3,8 @@ package model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 @Table(name="itens_receitas")
 public class ItemReceita implements Serializable {
@@ -16,6 +18,7 @@ public class ItemReceita implements Serializable {
 	@Column(name="CONTRA_INDICACAO")
 	private String contraIndicacao;
 
+	@Column(name="INSTRUCAO")
 	private String instrucao;
 
 	@Column(name="NM_RECEITA")
@@ -23,10 +26,12 @@ public class ItemReceita implements Serializable {
 
 	@Column(name="REG_ANVISA")
 	private int regAnvisa;
-
+	
+	@Column(name = "USO")
 	private String uso;
 
-	@ManyToOne
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="NUM_RECEITA")
 	private ReceitasMedica receitasMedica;
 
@@ -34,7 +39,7 @@ public class ItemReceita implements Serializable {
 	}
 
 	public int getIdItem() {
-		return this.idItem;
+		return idItem;
 	}
 
 	public void setIdItem(int idItem) {
@@ -42,7 +47,7 @@ public class ItemReceita implements Serializable {
 	}
 
 	public String getContraIndicacao() {
-		return this.contraIndicacao;
+		return contraIndicacao;
 	}
 
 	public void setContraIndicacao(String contraIndicacao) {
@@ -50,7 +55,7 @@ public class ItemReceita implements Serializable {
 	}
 
 	public String getInstrucao() {
-		return this.instrucao;
+		return instrucao;
 	}
 
 	public void setInstrucao(String instrucao) {
@@ -58,7 +63,7 @@ public class ItemReceita implements Serializable {
 	}
 
 	public String getNmReceita() {
-		return this.nmReceita;
+		return nmReceita;
 	}
 
 	public void setNmReceita(String nmReceita) {
@@ -66,7 +71,7 @@ public class ItemReceita implements Serializable {
 	}
 
 	public int getRegAnvisa() {
-		return this.regAnvisa;
+		return regAnvisa;
 	}
 
 	public void setRegAnvisa(int regAnvisa) {
@@ -74,7 +79,7 @@ public class ItemReceita implements Serializable {
 	}
 
 	public String getUso() {
-		return this.uso;
+		return uso;
 	}
 
 	public void setUso(String uso) {
@@ -82,11 +87,10 @@ public class ItemReceita implements Serializable {
 	}
 
 	public ReceitasMedica getReceitasMedica() {
-		return this.receitasMedica;
+		return receitasMedica;
 	}
 
 	public void setReceitasMedica(ReceitasMedica receitasMedica) {
 		this.receitasMedica = receitasMedica;
 	}
-
 }
