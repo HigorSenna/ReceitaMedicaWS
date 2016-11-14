@@ -19,7 +19,7 @@ public class MedicoService implements Serializable{
 	@Inject
 	private MedicoDAO medicoDAO;
 	
-	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void salvar(Medico medico) throws Exception{
 		medicoDAO.salvar(medico);
 	}

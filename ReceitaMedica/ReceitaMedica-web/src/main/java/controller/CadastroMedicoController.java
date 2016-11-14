@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -13,8 +14,8 @@ import com.sun.jersey.api.client.WebResource;
 import enums.TipoMensagemEnum;
 import model.Medico;
 import service.MedicoService;
+import utils.JsonUtils;
 import utils.MessagesUtils;
-import utils.ParamUtils;
 import utils.UrlUtils;
 
 @ViewScoped
@@ -23,8 +24,7 @@ public class CadastroMedicoController implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static final String CADASTRO_MEDICO = "ServicoMedico/medico/criar";
-	private static final String BUSCAR_MEDICO = "ServicoMedico/medico/medicoCRM";
+	private static final String CADASTRO_MEDICO = "ServicoMedico/medico/cadastroMedico";
 	
 	@Inject
 	private Medico medico;
@@ -36,45 +36,25 @@ public class CadastroMedicoController implements Serializable{
 	private WebResource webResource;
 	private ClientResponse response;
 	
-	public String cadastrarMedico(){
-		String json = null;
-		if(!isMedicoExistente()){
-			client = Client.create();
-			try {		
-				response = client.resource(UrlUtils.getURL(CADASTRO_MEDICO))
-						.queryParam(ParamUtils.NOME_MEDICO, medico.getNmMedico())
-						.queryParam(ParamUtils.CRM, medico.getCrmMedico())
-						.accept("application/json")
-						.get(ClientResponse.class);
-				
-				json = response.getEntity(String.class);
-				
-				//MessagesUtils.exibirMensagemRedirect("Medico cadastrado com sucesso", "cadastro.xhtml", TipoMensagemEnum.SUCESSO);
-				
-			} catch (Exception e) {
-				MessagesUtils.exibirMensagemRedirect("Falha ao cadastrar médico", "cadastro.xhtml", TipoMensagemEnum.ERRO);
-			}
-		}
-		else{
-			MessagesUtils.exibirMensagemRedirect("Médico ja existe", "cadastro.xhtml", TipoMensagemEnum.ERRO);
-		}	
-		
-		return json;
-	}
-	
-	private boolean isMedicoExistente(){
-		String json = null;
+	public void cadastrarMedico() {
+
 		client = Client.create();
-		webResource = client.resource(UrlUtils.getURL(BUSCAR_MEDICO))
-				.queryParam(ParamUtils.CRM, medico.getCrmMedico());		
+		Medico m = new Medico();
+		m.setCrmMedico("6118181");
+		m.setNmMedico("FULL TRAB");
 		try {
-			response = webResource.accept("application/json").get(ClientResponse.class);
-			json = response.getEntity(String.class);			
+			String json = JsonUtils.parseJson(m);
+
+			webResource = client.resource(UrlUtils.getURL(CADASTRO_MEDICO));
+			response = webResource.type(MediaType.APPLICATION_JSON)
+					.post(ClientResponse.class, json);
+
+			json = response.getEntity(String.class);
+			System.out.println(json);
+
 		} catch (Exception e) {
-			MessagesUtils.exibirMensagemRedirect("Erro ao buscar", "cadastro.xhtml", TipoMensagemEnum.ERRO);
-			return true;
+			MessagesUtils.exibirMensagemRedirect("Falha ao cadastrar médico", "cadastro.xhtml", TipoMensagemEnum.ERRO);
 		}
-		return !json.equals("null");
 	}
 
 	public Medico getMedico() {
