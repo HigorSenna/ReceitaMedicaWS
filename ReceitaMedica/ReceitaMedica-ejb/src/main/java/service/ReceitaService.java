@@ -19,6 +19,11 @@ public class ReceitaService implements Serializable {
 	@Inject
 	private ReceitaDAO receitaDAO;
 	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void atualizarReceita(ReceitasMedica receita) throws Exception{
+		receitaDAO.atualizar(receita);
+	}
+	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public ReceitasMedica buscarPorNumero(int numReceita) throws Exception{
 		return receitaDAO.buscarPorNumero(numReceita);

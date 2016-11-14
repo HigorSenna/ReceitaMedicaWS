@@ -28,6 +28,7 @@ import model.ReciboReceita;
 import service.ItemReceitaService;
 import service.ReceitaService;
 import utils.JsonUtils;
+import utils.MessagesWS;
 import utils.ParamUtils;
 
 @ApplicationPath("/ServicoReceitaMedica")
@@ -44,6 +45,58 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	
 	private ReceitasMedica receitaMedica;
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/cancelarReceita")
+	public MessagesWS cancelarReceita(String numReceita){
+		JSONObject obj = JsonUtils.parseObject(numReceita);
+		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
+		
+		try {
+			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
+			if(isReceitaValida(receitaMedica)){
+				receitaMedica.setFlStatus(StatusReceitaEnum.CANCELADA.getValor());
+				receitaService.atualizarReceita(receitaMedica);
+			}
+			else{
+				return new MessagesWS("Essa receita ja foi utilizada ou cancelada");
+			}
+			
+			return new MessagesWS("Receita cancelada com aucesso!!");
+		} catch (Exception e) {
+			return new MessagesWS("Falha ao cancelar receita!!");
+		}
+	}
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/utilizarReceita")
+	public MessagesWS utilizarReceita(String numReceita){
+		JSONObject obj = JsonUtils.parseObject(numReceita);
+		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
+		
+		try {
+			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
+			if(isReceitaValida(receitaMedica)){
+				receitaMedica.setFlStatus(StatusReceitaEnum.UTILIZADA.getValor());
+				receitaService.atualizarReceita(receitaMedica);
+			}
+			else{
+				return new MessagesWS("Essa receita ja foi utilizada ou cancelada");
+			}
+			
+			return new MessagesWS("Receita utilizada com sucesso!!");
+		} catch (Exception e) {
+			return new MessagesWS("Falha ao utilizar receita!!");
+		}
+	}
+	
+	private boolean isReceitaValida(ReceitasMedica receita){
+		if(StatusReceitaEnum.CANCELADA.getValor().equals(receita.getFlStatus()) || StatusReceitaEnum.UTILIZADA.getValor().equals(receita.getFlStatus())){
+			return false;
+		}
+		return true;
+	}
 
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
