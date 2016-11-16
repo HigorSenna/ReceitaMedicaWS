@@ -8,15 +8,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.primefaces.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import enums.StatusReceitaEnum;
 import model.ItemReceita;
@@ -104,12 +109,36 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		}
 		return true;
 	}
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/buscarReceitaPorNum")
+	public ReceitasMedica buscarPorNum(@QueryParam("numReceita") String nuReceita){
+		JSONObject obj = JsonUtils.parseObject(nuReceita);
+		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
+		
+		try {
+			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
+			if(receitaMedica != null){
+				List<ItemReceita> itensReceita = itemReceitaService.buscarPorNumReceita(numeroReceita);
+				receitaMedica.setItensReceitas(itensReceita);
+			}
+			
+			return receitaMedica;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/buscarReceitaPorNumero")
-	public ReceitasMedica buscarPorNumero(String numReceita){
-		JSONObject obj = JsonUtils.parseObject(numReceita);
+	public ReceitasMedica buscarPorNumero(String numReceita){	
+		Gson gson = new GsonBuilder().create();
+		String sytr=gson.fromJson(numReceita, String.class);
+		
+		JsonUtils.parseJson(numReceita);
+		JSONObject obj = JsonUtils.parseObject(sytr);
 		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
 		
 		try {
