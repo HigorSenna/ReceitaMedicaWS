@@ -226,14 +226,14 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		}
 	}
 	
-	private List<ItemReceita> getListItens(JSONObject objetoJson,ReceitasMedica receita){
+	private List<ItemReceita> getListItens(JSONObject objetoJson,ReceitasMedica receita) throws Exception{
 		List<ItemReceita> itensReceita = new ArrayList<>();		
 		ItemReceita item;
 		for(Object j : objetoJson.getJSONArray("itensReceitas")){
 			JSONObject jo = (JSONObject) j;
 			
 			item = new ItemReceita();
-			item.setContraIndicacao(jo.getString(ParamUtils.CONTRA_INDICACAO).trim());
+			item.setContraIndicacao(jo.getString(ParamUtils.CONTRA_INDICACAO));
 			item.setRegAnvisa(jo.getInt(ParamUtils.REG_ANVISA));
 			item.setInstrucao(jo.getString(ParamUtils.INSTRUCAO));
 			item.setUso(String.valueOf(jo.getInt(ParamUtils.REG_ANVISA)));
