@@ -161,12 +161,24 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		}
 	}
 	
+	private String validarTipoJsonCadastroReceita(String json){
+		if(json.contains("\\")){
+			 Gson gson = new GsonBuilder().create();
+			 String jsonRetornado = gson.fromJson(json, String.class);
+			 return JsonUtils.parseObject(jsonRetornado).toString();
+		}
+		else{
+			JsonObject jobj = new Gson().fromJson(json, JsonObject.class);
+			JsonElement j = jobj.get(ParamUtils.NUM_RECEITA);
+			return j.toString().replace("\"", "");
+		}
+	}
+	
 	private String validarTipoJson(String json){
 		if(json.contains("\\")){
-			Gson gson = new GsonBuilder().create();
+			 Gson gson = new GsonBuilder().create();
 			 String jsonRetornado = gson.fromJson(json, String.class);
 			 return JsonUtils.parseObject(jsonRetornado).getString(ParamUtils.NUM_RECEITA);
-			 
 		}
 		else{
 			JsonObject jobj = new Gson().fromJson(json, JsonObject.class);
@@ -179,7 +191,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/cadastroReceita")
 	public ReciboReceita salvar(String jsonReceita){
-		String json = validarTipoJson(jsonReceita);
+		String json = validarTipoJsonCadastroReceita(jsonReceita);
 		JSONObject obj = JsonUtils.parseObject(json);
 		ReceitasMedica receita = null;
 		Paciente paciente = null;
@@ -221,7 +233,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 			JSONObject jo = (JSONObject) j;
 			
 			item = new ItemReceita();
-			item.setContraIndicacao(jo.getString(ParamUtils.CONTRA_INDICACAO));
+			item.setContraIndicacao(jo.getString(ParamUtils.CONTRA_INDICACAO).trim());
 			item.setRegAnvisa(jo.getInt(ParamUtils.REG_ANVISA));
 			item.setInstrucao(jo.getString(ParamUtils.INSTRUCAO));
 			item.setUso(String.valueOf(jo.getInt(ParamUtils.REG_ANVISA)));
