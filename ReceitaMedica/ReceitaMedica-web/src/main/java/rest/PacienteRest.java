@@ -19,6 +19,7 @@ import service.PacienteService;
 import utils.JsonUtils;
 import utils.MessagesWS;
 import utils.ParamUtils;
+import utils.UsuarioUtils;
 
 @Path("/paciente")
 @ApplicationPath("ServicoPaciente")
@@ -60,6 +61,8 @@ public class PacienteRest extends Application implements Serializable{
 		paciente = new Paciente();
 		paciente.setCpfPaciente(objeto.getString(ParamUtils.CPF));
 		paciente.setNmPaciente(objeto.getString(ParamUtils.NOME_PACIENTE));
+		
+		paciente.setUsuario(UsuarioUtils.getUsuarioPaciente(paciente));
 		
 		return paciente;
 	}

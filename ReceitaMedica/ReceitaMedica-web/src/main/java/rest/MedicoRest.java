@@ -21,6 +21,7 @@ import service.MedicoService;
 import utils.JsonUtils;
 import utils.MessagesWS;
 import utils.ParamUtils;
+import utils.UsuarioUtils;
 
 @Path("/medico")
 @ApplicationPath("/ServicoMedico")
@@ -60,6 +61,8 @@ public class MedicoRest extends Application implements Serializable{
 		medico = new Medico();
 		medico.setCrmMedico(objeto.getString(ParamUtils.CRM));
 		medico.setNmMedico(objeto.getString(ParamUtils.NOME_MEDICO));
+		
+		medico.setUsuario(UsuarioUtils.getUsuarioMedico(medico));
 		
 		return medico;
 	}
