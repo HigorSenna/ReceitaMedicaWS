@@ -26,11 +26,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import enums.StatusReceitaEnum;
+import enums.TipoUsuarioEnum;
 import model.ItemReceita;
 import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
 import model.ReciboReceita;
+import model.Usuario;
 import service.ItemReceitaService;
 import service.MedicoService;
 import service.PacienteService;
@@ -178,9 +180,14 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	public ReciboReceita salvar(String jsonReceita){
 		JSONObject obj = JsonUtils.parseObject(jsonReceita);
 		ReceitasMedica receita = null;
+		Paciente paciente = null;
+		Medico medico = null;
 		try {
+			 paciente = getPaciente(obj);
+			 medico = getMedico(obj);
 			 receita = getReceitaMedicoPaciente(obj);
-			 if(hasPacienteCadastrado(getPaciente(obj)) || hasMedicoCadastrado(getMedico(obj))){
+			 
+			 if(hasPacienteCadastrado(paciente) || hasMedicoCadastrado(medico)){
 				 receita = receitaService.atualizarRetornando(receita);
 			 }
 			 else{
@@ -244,8 +251,20 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		medico = new Medico();
 		medico.setNmMedico(medicoJson.getString(ParamUtils.NOME_MEDICO));
 		medico.setCrmMedico(medicoJson.getString(ParamUtils.CRM));
+		
+		medico.setUsuario(getUsuarioMedico(medico));
 	
 		return medico;
+	}
+	
+	private Usuario getUsuarioMedico(Medico medico){
+		Usuario usuario = new Usuario();
+		usuario.setLogin(medico.getCrmMedico());
+		usuario.setSenha(medico.getCrmMedico()+'M');
+		
+		usuario.setFlTipoUsuario(TipoUsuarioEnum.MEDICO.getValor());
+		
+		return usuario;
 	}
 	
 	private Paciente getPaciente(JSONObject objeto) throws Exception{
@@ -255,7 +274,20 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		paciente.setCpfPaciente(pacienteJson.getString(ParamUtils.CPF));
 		paciente.setNmPaciente(pacienteJson.getString(ParamUtils.NOME_PACIENTE));
 		
+		paciente.setUsuario(getUsuarioPaciente(paciente));
+		
 		return paciente;
+	}
+	
+	private Usuario getUsuarioPaciente(Paciente paciente){
+		
+		Usuario usuario = new Usuario();
+		usuario.setLogin(paciente.getCpfPaciente());
+		usuario.setSenha(paciente.getCpfPaciente()+ 'U');
+		
+		usuario.setFlTipoUsuario(TipoUsuarioEnum.PACIENTE.getValor());
+		
+		return usuario;
 	}
 	
 	
