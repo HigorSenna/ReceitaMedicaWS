@@ -16,70 +16,123 @@
 	
 				<br /> <br /> <br />
 	
-<!-- 				<div class="form-group row"> -->
-<!-- 					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label> -->
-<!-- 					<div class="col-xs-10"> -->
-<!-- 						<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 							id="example-text-input" style="width: 50%;" maxlength="11" /> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="form-group row"> -->
-<!-- 					<label for="example-search-input" class="col-xs-2 col-form-label">CRM Médico</label> -->
-<!-- 					<div class="col-xs-10"> -->
-<!-- 						<h:inputText class="form-control" -->
-<!-- 							value="#{cadastroReceitaController.receitaMedica.medico.crmMedico}" id="example-search-input" style="width: 50%;" maxlength="11"> -->
+				<div class="form-group row">
+					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label>
+					<div class="col-xs-10">
+						<h:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.receitaMedica.paciente.cpfPaciente}"
+							id="example-text-input" style="width: 50%;" maxlength="11" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-xs-2 col-form-label">CRM Médico</label>
+					<div class="col-xs-10">
+						<h:inputText class="form-control"
+							value="#{cadastroReceitaController.cadastroReceitaVM.receitaMedica.medico.crmMedico}" id="example-search-input" style="width: 50%;" maxlength="11">
 							
-<!-- 						</h:inputText> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+						</h:inputText>
+					</div>
+				</div>
 				
-				<h:commandButton class="btn btn-success" value="Cadastrar" id="botaoCadastroReceita" action="#{cadastroReceitaController.salvar()}" />
-				<br/>
-				<br/>
-				<br/>
-				<div>
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="numReceitaItem" class="col-xs-2 col-form-label">Numero Receita</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.numReceita}" id="numReceitaItem"  -->
-<!-- 								style="width: 50%;" maxlength="11" disabled="true"> -->
+				<div class="form-group row">
+					<label for="numReceitaItem" class="col-xs-2 col-form-label">Numero Receita</label>
+					<div class="col-xs-10">
+						<h:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.receitaMedica.numReceita}" id="numReceitaItem" 
+							style="width: 50%;" maxlength="11" disabled="true">
 
-<!-- 							</h:inputText> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="instrucaoItemReceita" class="col-xs-2 col-form-label">Instrucao</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputTextarea class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="instrucaoItemReceita" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="nomeReceita" class="col-xs-2 col-form-label">Nome Receita</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="nomeReceita" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="usoReceita" class="col-xs-2 col-form-label">USO</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="usoReceita" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="contraIndicacao" class="col-xs-2 col-form-label">Contra-Indicação</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="contraIndicacao" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+						</h:inputText>
+					</div>
 				</div>
 			</h:form>
+			
+			<h:form id="formularioMedicamentos" prependId="false">
+			
+				<div>
+					<br/>
+					
+					<div class="form-group row">
+						<label for="instrucaoItemReceita" class="col-xs-2 col-form-label">Instrucao</label>
+						<div class="col-xs-10">
+							<h:inputTextarea class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.itemReceita.instrucao}"
+								id="instrucaoItemReceita" style="width: 50%;" maxlength="11" required="true"/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="nomeReceita" class="col-xs-2 col-form-label">Nome Receita</label>
+						<div class="col-xs-10">
+							<h:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.itemReceita.nmReceita}"
+								id="nomeReceita" style="width: 50%;" maxlength="11" required="true"/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="usoReceita" class="col-xs-2 col-form-label">USO</label>
+						<div class="col-xs-10">
+							<h:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.itemReceita.uso}"
+								id="usoReceita" style="width: 50%;" maxlength="11" required="true"/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="contraIndicacao" class="col-xs-2 col-form-label">Contra-Indicação</label>
+						<div class="col-xs-10">
+							<h:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.itemReceita.contraIndicacao}"
+								id="contraIndicacao" style="width: 50%;" maxlength="11" required="true"/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="regAnvisa" class="col-xs-2 col-form-label">Nº Anvisa</label>
+						<div class="col-xs-10">
+							<h:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.itemReceita.regAnvisa}"
+								id="regAnvisa" style="width: 50%;" maxlength="11" required="true"/>
+						</div>
+					</div>
+				</div>
+				<p:commandButton class="btn btn-info" value="Adicionar Medicamento" id="botaoAddMedicamento" action="#{cadastroReceitaController.addItemReceita()}" style="margin-left:45%"
+				  update="medicamentos message formularioMedicamentos" process="formularioMedicamentos"/>
+			</h:form>
+				
+				<br/>
+				
+
+				<div class="table table-hover">
+					<p:dataTable id="medicamentos" style="margin-bottom:0;margin-top: 5%;margin-left:0%;width:60%;text-align:center;" paginator="true" 
+						rows="10" lazy="false" var="item" value="#{cadastroReceitaController.cadastroReceitaVM.itensReceita}"						
+						
+						rowsPerPageTemplate="5, 10, 15" paginatorPosition="bottom">
+						
+						<f:facet name="header">
+							Tabela de Medicamentos
+						</f:facet>
+<!-- 						<p:column headerText="Data da compra"> -->
+<!-- 							<h:outputText value=""> -->
+<!-- 								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" /> -->
+<!-- 							</h:outputText> -->
+<!-- 						</p:column> -->
+						<p:column headerText="Instrução">
+							<h:outputText value="#{item.instrucao}" />
+						</p:column>
+
+						<p:column headerText="Nome da Receita">
+							<h:outputText value="#{item.nmReceita}" />
+						</p:column>
+
+						<p:column headerText="Uso">
+							<h:outputText value="#{item.uso}" />
+						</p:column>
+
+						<p:column headerText="Contra-Indicação">
+							<h:outputText value="#{item.contraIndicacao}" />
+						</p:column>
+						
+						<p:column headerText="Nº Anvisa">
+							<h:outputText value="#{item.regAnvisa}" />
+						</p:column>
+						
+					</p:dataTable>
+				</div>
+				<h:commandButton class="btn btn-success" value="Cadastrar" id="botaoCadastroReceita" action="#{cadastroReceitaController.salvar()}" />
 		</div>
 			
 	</ui:define>
