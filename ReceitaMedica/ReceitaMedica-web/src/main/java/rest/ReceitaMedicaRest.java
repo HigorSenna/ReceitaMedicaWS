@@ -22,6 +22,8 @@ import org.primefaces.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import enums.StatusReceitaEnum;
 import model.ItemReceita;
@@ -84,7 +86,11 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/utilizarReceita")
 	public MessagesWS utilizarReceita(String numReceita){
-		JSONObject obj = JsonUtils.parseObject(numReceita);
+		
+		Gson gson = new GsonBuilder().create();
+		String sytr=gson.fromJson(numReceita, String.class);
+		
+		JSONObject obj = JsonUtils.parseObject(sytr);
 		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
 		
 		try {
@@ -133,13 +139,11 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/buscarReceitaPorNumero")
-	public ReceitasMedica buscarPorNumero(String numReceita){	
-		Gson gson = new GsonBuilder().create();
-		String sytr=gson.fromJson(numReceita, String.class);
-		
-		JsonUtils.parseJson(numReceita);
-		JSONObject obj = JsonUtils.parseObject(sytr);
-		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
+	public ReceitasMedica buscarPorNumero(String numReceita){
+		String valorJson = null;
+		valorJson = validarTipoJson(numReceita);
+	
+		int numeroReceita = Integer.parseInt(valorJson);
 		
 		try {
 			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
@@ -151,6 +155,20 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 			return receitaMedica;
 		} catch (Exception e) {
 			return null;
+		}
+	}
+	
+	private String validarTipoJson(String numReceita){
+		if(numReceita.contains("\\")){
+			Gson gson = new GsonBuilder().create();
+			 String json = gson.fromJson(numReceita, String.class);
+			 return JsonUtils.parseObject(json).getString(ParamUtils.NUM_RECEITA);
+			 
+		}
+		else{
+			JsonObject jobj = new Gson().fromJson(numReceita, JsonObject.class);
+			JsonElement j = jobj.get(ParamUtils.NUM_RECEITA);
+			return j.toString().replace("\"", "");
 		}
 	}
 	
