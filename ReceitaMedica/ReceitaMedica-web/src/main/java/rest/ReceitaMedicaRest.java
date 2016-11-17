@@ -26,13 +26,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import enums.StatusReceitaEnum;
-import enums.TipoUsuarioEnum;
 import model.ItemReceita;
 import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
 import model.ReciboReceita;
-import model.Usuario;
 import service.ItemReceitaService;
 import service.MedicoService;
 import service.PacienteService;
@@ -40,6 +38,7 @@ import service.ReceitaService;
 import utils.JsonUtils;
 import utils.MessagesWS;
 import utils.ParamUtils;
+import utils.UsuarioUtils;
 
 @ApplicationPath("/ServicoReceitaMedica")
 @Path("/receita")
@@ -252,19 +251,9 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		medico.setNmMedico(medicoJson.getString(ParamUtils.NOME_MEDICO));
 		medico.setCrmMedico(medicoJson.getString(ParamUtils.CRM));
 		
-		medico.setUsuario(getUsuarioMedico(medico));
+		medico.setUsuario(UsuarioUtils.getUsuarioMedico(medico));
 	
 		return medico;
-	}
-	
-	private Usuario getUsuarioMedico(Medico medico){
-		Usuario usuario = new Usuario();
-		usuario.setLogin(medico.getCrmMedico());
-		usuario.setSenha(medico.getCrmMedico()+'M');
-		
-		usuario.setFlTipoUsuario(TipoUsuarioEnum.MEDICO.getValor());
-		
-		return usuario;
 	}
 	
 	private Paciente getPaciente(JSONObject objeto) throws Exception{
@@ -274,22 +263,10 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		paciente.setCpfPaciente(pacienteJson.getString(ParamUtils.CPF));
 		paciente.setNmPaciente(pacienteJson.getString(ParamUtils.NOME_PACIENTE));
 		
-		paciente.setUsuario(getUsuarioPaciente(paciente));
+		paciente.setUsuario(UsuarioUtils.getUsuarioPaciente(paciente));
 		
 		return paciente;
 	}
-	
-	private Usuario getUsuarioPaciente(Paciente paciente){
-		
-		Usuario usuario = new Usuario();
-		usuario.setLogin(paciente.getCpfPaciente());
-		usuario.setSenha(paciente.getCpfPaciente()+ 'U');
-		
-		usuario.setFlTipoUsuario(TipoUsuarioEnum.PACIENTE.getValor());
-		
-		return usuario;
-	}
-	
 	
 	private String getJsonIdentado(Object elemento) throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
