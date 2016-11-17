@@ -6,6 +6,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -31,6 +32,7 @@ public class ConsultaReceitaController implements Serializable{
 		String numReceita= new String(); 
 		numReceita = "{'numReceita' : '2'}";
 		String json = numReceita;
+		
 		
 		webResource = client.resource(UrlUtils.getURL(CANCELAR_RECEITA ));
 		response = webResource.type(MediaType.APPLICATION_JSON)
@@ -58,13 +60,15 @@ public class ConsultaReceitaController implements Serializable{
 	public void buscarReceitaPorNumero(){
 		client = Client.create();
 		try {		
-			String numReceita= new String(); 
-			numReceita = "{'numReceita' : '1'}";
-			String json = numReceita;
+			String numReceita= "1";
+			String json = null;
+			
+			JsonObject jo = new JsonObject();
+			jo.addProperty("numReceita", numReceita);
 			
 			webResource = client.resource(UrlUtils.getURL(CONSULTA_RECEITA_POR_NUMERO));
 			response = webResource.type(MediaType.APPLICATION_JSON)
-						.post(ClientResponse.class,json);
+						.post(ClientResponse.class,jo.toString());
 				
 				json = response.getEntity(String.class);				
 				System.out.println(json);
