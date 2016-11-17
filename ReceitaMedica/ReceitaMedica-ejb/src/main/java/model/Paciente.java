@@ -3,11 +3,14 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -27,6 +30,11 @@ public class Paciente implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy="paciente",fetch = FetchType.LAZY)
 	private List<ReceitasMedica> receitasMedicas;
+	
+	@OneToOne(cascade = CascadeType.ALL,fetch= FetchType.LAZY)
+	@JsonIgnore
+	@JoinColumn(name="LOGIN",referencedColumnName="LOGIN",insertable = true,updatable = true)
+	private Usuario usuario;
 	
 	public Paciente(String cpfPaciente, String nmPaciente) {
 		this.cpfPaciente = cpfPaciente;
@@ -60,18 +68,11 @@ public class Paciente implements Serializable {
 		this.receitasMedicas = receitasMedicas;
 	}
 
-	public ReceitasMedica addReceitasMedica(ReceitasMedica receitasMedica) {
-		getReceitasMedicas().add(receitasMedica);
-		receitasMedica.setPaciente(this);
-
-		return receitasMedica;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public ReceitasMedica removeReceitasMedica(ReceitasMedica receitasMedica) {
-		getReceitasMedicas().remove(receitasMedica);
-		receitasMedica.setPaciente(null);
-
-		return receitasMedica;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-
 }

@@ -24,6 +24,11 @@ public class Medico implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy="medico",fetch=FetchType.LAZY)
 	private List<ReceitasMedica> receitasMedicas;
+	
+	@OneToOne(cascade = CascadeType.ALL,fetch= FetchType.LAZY)
+	@JsonIgnore
+	@JoinColumn(name="LOGIN", referencedColumnName="LOGIN",insertable = true , updatable = true)
+	private Usuario usuario;
 
 	public Medico() {
 	}
@@ -52,4 +57,11 @@ public class Medico implements Serializable {
 		this.receitasMedicas = receitasMedicas;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 }
