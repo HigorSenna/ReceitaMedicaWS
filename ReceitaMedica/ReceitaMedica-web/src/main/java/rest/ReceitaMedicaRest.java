@@ -64,8 +64,10 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/cancelarReceita")
 	public MessagesWS cancelarReceita(String numReceita){
-		JSONObject obj = JsonUtils.parseObject(numReceita);
-		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
+		String valorJson = null;
+		valorJson = validarTipoJson(numReceita);
+//		JSONObject obj = JsonUtils.parseObject(numReceita);
+		int numeroReceita = Integer.parseInt(valorJson);
 		
 		try {
 			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
@@ -159,15 +161,15 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		}
 	}
 	
-	private String validarTipoJson(String numReceita){
-		if(numReceita.contains("\\")){
+	private String validarTipoJson(String json){
+		if(json.contains("\\")){
 			Gson gson = new GsonBuilder().create();
-			 String json = gson.fromJson(numReceita, String.class);
-			 return JsonUtils.parseObject(json).getString(ParamUtils.NUM_RECEITA);
+			 String jsonRetornado = gson.fromJson(json, String.class);
+			 return JsonUtils.parseObject(jsonRetornado).getString(ParamUtils.NUM_RECEITA);
 			 
 		}
 		else{
-			JsonObject jobj = new Gson().fromJson(numReceita, JsonObject.class);
+			JsonObject jobj = new Gson().fromJson(json, JsonObject.class);
 			JsonElement j = jobj.get(ParamUtils.NUM_RECEITA);
 			return j.toString().replace("\"", "");
 		}
@@ -177,7 +179,8 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/cadastroReceita")
 	public ReciboReceita salvar(String jsonReceita){
-		JSONObject obj = JsonUtils.parseObject(jsonReceita);
+		String json = validarTipoJson(jsonReceita);
+		JSONObject obj = JsonUtils.parseObject(json);
 		ReceitasMedica receita = null;
 		Paciente paciente = null;
 		Medico medico = null;
