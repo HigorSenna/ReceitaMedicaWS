@@ -2,18 +2,18 @@ package controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import VM.CadastroReceitaVM;
 import model.ItemReceita;
 import model.Medico;
 import model.Paciente;
@@ -27,16 +27,23 @@ public class CadastroReceitaController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private static final String CADASTRO_RECEITA = "ServicoReceitaMedica/receita/cadastroReceita";
-	
+
 	@Inject
-	private ReceitasMedica receitaMedica;
+	private CadastroReceitaVM cadastroReceitaVM;
 	
 	private Client client;
 	private WebResource webResource;
 	private ClientResponse response;
 	
-	public ReceitasMedica getReceitaMedica() {
-		return receitaMedica;
+	@PostConstruct
+	public void init(){
+		cadastroReceitaVM.setItensReceita(new ArrayList<ItemReceita>());
+	}
+	
+	public void addItemReceita(){
+		ItemReceita item = cadastroReceitaVM.getItemReceita();
+		cadastroReceitaVM.getItensReceita().add(item);
+		cadastroReceitaVM.setItemReceita(new ItemReceita());
 	}
 	
 	public void salvar(){
@@ -82,8 +89,11 @@ public class CadastroReceitaController implements Serializable{
 		System.out.println(json);
 	}
 
-	public void setReceitaMedica(ReceitasMedica receitaMedica) {
-		this.receitaMedica = receitaMedica;
+	public CadastroReceitaVM getCadastroReceitaVM() {
+		return cadastroReceitaVM;
 	}
 
+	public void setCadastroReceitaVM(CadastroReceitaVM cadastroReceitaVM) {
+		this.cadastroReceitaVM = cadastroReceitaVM;
+	}
 }
