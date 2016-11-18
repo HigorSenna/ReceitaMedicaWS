@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import model.ItemReceita;
+import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
 
@@ -20,6 +21,9 @@ public class CadastroReceitaVM implements Serializable {
 	
 	@Inject
 	private Paciente paciente;
+	
+	@Inject
+	private Medico medico;
 	
 	private List<ItemReceita> itensReceita ;
 
@@ -45,6 +49,14 @@ public class CadastroReceitaVM implements Serializable {
 
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
 	}
 
 	public List<ItemReceita> getItensReceita() {

@@ -36,6 +36,20 @@ public class MedicoRest extends Application implements Serializable{
 	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/buscarMedicoCRM")
+	public Medico getMedicoCRM(String jsonMedico){
+		JSONObject obj = JsonUtils.parseObject(jsonMedico);
+		String CRM = obj.getString(ParamUtils.CRM);
+		
+		try {
+			return medicoService.buscarPorCrm(CRM);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/cadastroMedico")
 	public MessagesWS salvar(String jsonMedico){
 		JSONObject obj = JsonUtils.parseObject(jsonMedico);

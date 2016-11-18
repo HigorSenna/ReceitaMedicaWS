@@ -27,12 +27,14 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-search-input" class="col-xs-2 col-form-label">CRM Médico</label>
+					<label for="crmMedico" class="col-xs-2 col-form-label">CRM Médico</label>
 					<div class="col-xs-10">
-						<h:inputText class="form-control"
-							value="#{cadastroReceitaController.cadastroReceitaVM.receitaMedica.medico.crmMedico}" id="example-search-input" style="width: 50%;" maxlength="11">
-							
-						</h:inputText>
+						<p:inputText class="form-control"
+							value="#{cadastroReceitaController.cadastroReceitaVM.medico.crmMedico}" id="crmMedico" style="width: 50%;" maxlength="11">
+								<p:ajax event="blur" listener="#{cadastroReceitaController.getMedicoCRM()}" update="crmMedico nomeMedico"/>
+						</p:inputText>
+						
+						<h:outputLabel id="nomeMedico" value="#{cadastroReceitaController.cadastroReceitaVM.medico.nmMedico}" />
 					</div>
 				</div>
 				

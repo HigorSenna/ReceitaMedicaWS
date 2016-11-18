@@ -31,6 +31,7 @@ public class CadastroReceitaController implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static final String CADASTRO_RECEITA = "ServicoReceitaMedica/receita/cadastroReceita";
 	private static final String BUSCAR_PACIENTE = "ServicoPaciente/paciente/buscarPacienteCPF";
+	private static final String BUSCAR_MEDICO = "ServicoMedico/medico/buscarMedicoCRM";
 
 
 	@Inject
@@ -49,6 +50,32 @@ public class CadastroReceitaController implements Serializable{
 		ItemReceita item = cadastroReceitaVM.getItemReceita();
 		cadastroReceitaVM.getItensReceita().add(item);
 		cadastroReceitaVM.setItemReceita(new ItemReceita());
+	}
+	
+	public void getMedicoCRM(){
+		if(cadastroReceitaVM.getMedico() != null){
+			client = Client.create();
+			
+			String json = JsonUtils.parseJson(cadastroReceitaVM.getMedico());
+			
+			webResource = client.resource(UrlUtils.getURL(BUSCAR_MEDICO));
+			response = webResource.type(MediaType.APPLICATION_JSON)
+						.post(ClientResponse.class,json);
+			try {
+				json = response.getEntity(String.class);
+				
+				JSONObject obj= JsonUtils.parseObject(json);
+				
+				Medico medico = new Medico();
+				medico.setCrmMedico(obj.getString(ParamUtils.CRM));
+				medico.setNmMedico(obj.getString(ParamUtils.NOME_MEDICO));
+				
+				cadastroReceitaVM.setMedico(medico);
+				
+			} catch (Exception e) {
+				cadastroReceitaVM.setMedico(new Medico());
+			}
+		}
 	}
 	
 	public void getPacienteCPF(){
