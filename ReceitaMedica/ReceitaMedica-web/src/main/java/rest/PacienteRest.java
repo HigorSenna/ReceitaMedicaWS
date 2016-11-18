@@ -22,7 +22,7 @@ import utils.ParamUtils;
 import utils.UsuarioUtils;
 
 @Path("/paciente")
-@ApplicationPath("ServicoPaciente")
+@ApplicationPath("/ServicoPaciente")
 public class PacienteRest extends Application implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -52,6 +52,25 @@ public class PacienteRest extends Application implements Serializable{
 			return new MessagesWS("Falha ao inserir paciente");
 		}
 	}
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/buscarPacienteCPF")
+	public Paciente getPacienteCPF(String cpfPaciente){
+		
+		Paciente paciente = null;
+		JSONObject obj = JsonUtils.parseObject(cpfPaciente);
+		String cpf = obj.getString(ParamUtils.CPF);
+		
+		try {
+			paciente = pacienteService.buscarPorCPF(cpf);
+			return paciente;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	
 	private boolean hasPacienteComCPF(Paciente paciente) throws Exception{
 		Paciente pac = pacienteService.buscarPorCPF(paciente.getCpfPaciente());
 		return pac != null;

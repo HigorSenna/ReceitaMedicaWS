@@ -17,10 +17,13 @@
 				<br /> <br /> <br />
 	
 				<div class="form-group row">
-					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label>
+					<label for="cpfPaciente" class="col-xs-2 col-form-label">Cpf Paciente</label>
 					<div class="col-xs-10">
-						<h:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.receitaMedica.paciente.cpfPaciente}"
-							id="example-text-input" style="width: 50%;" maxlength="11" />
+						<p:inputText class="form-control" value="#{cadastroReceitaController.cadastroReceitaVM.paciente.cpfPaciente}"
+							id="cpfPaciente" style="width: 50%;" maxlength="11">
+								<p:ajax event="blur" listener="#{cadastroReceitaController.getPacienteCPF()}" update="cpfPaciente nomePaciente"/>
+						</p:inputText>
+							<h:outputLabel id="nomePaciente" value="#{cadastroReceitaController.cadastroReceitaVM.paciente.nmPaciente}" />
 					</div>
 				</div>
 				<div class="form-group row">
@@ -89,7 +92,7 @@
 						</div>
 					</div>
 				</div>
-				<p:commandButton class="btn btn-info" value="Adicionar Medicamento" id="botaoAddMedicamento" action="#{cadastroReceitaController.addItemReceita()}" style="margin-left:45%"
+				<p:commandButton class="btn btn-info" value="Adicionar Medicamento" id="botaoAddMedicamento" action="#{cadastroReceitaController.addItemReceita()}" style="margin-left:43%"
 				  update="medicamentos message formularioMedicamentos" process="formularioMedicamentos"/>
 			</h:form>
 				

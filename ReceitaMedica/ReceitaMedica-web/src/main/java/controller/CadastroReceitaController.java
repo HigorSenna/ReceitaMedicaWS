@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 
+import org.primefaces.json.JSONObject;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -19,6 +21,7 @@ import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
 import utils.JsonUtils;
+import utils.ParamUtils;
 import utils.UrlUtils;
 
 @ViewScoped
@@ -27,6 +30,8 @@ public class CadastroReceitaController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private static final String CADASTRO_RECEITA = "ServicoReceitaMedica/receita/cadastroReceita";
+	private static final String BUSCAR_PACIENTE = "ServicoPaciente/paciente/buscarPacienteCPF";
+
 
 	@Inject
 	private CadastroReceitaVM cadastroReceitaVM;
@@ -45,6 +50,33 @@ public class CadastroReceitaController implements Serializable{
 		cadastroReceitaVM.getItensReceita().add(item);
 		cadastroReceitaVM.setItemReceita(new ItemReceita());
 	}
+	
+	public void getPacienteCPF(){
+		if(cadastroReceitaVM.getPaciente() != null){
+			client = Client.create();
+			
+			String json = JsonUtils.parseJson(cadastroReceitaVM.getPaciente());
+			
+			webResource = client.resource(UrlUtils.getURL(BUSCAR_PACIENTE));
+			response = webResource.type(MediaType.APPLICATION_JSON)
+						.post(ClientResponse.class,json);
+			try {
+				json = response.getEntity(String.class);
+				
+				JSONObject obj= JsonUtils.parseObject(json);
+				
+				Paciente paciente = new Paciente();
+				paciente.setCpfPaciente(obj.getString(ParamUtils.CPF));
+				paciente.setNmPaciente(obj.getString(ParamUtils.NOME_PACIENTE));
+				
+				cadastroReceitaVM.setPaciente(paciente);
+				
+			} catch (Exception e) {
+				cadastroReceitaVM.setPaciente(new Paciente());
+			}
+		}
+	
+	}	
 	
 	public void salvar(){
 		client = Client.create();
