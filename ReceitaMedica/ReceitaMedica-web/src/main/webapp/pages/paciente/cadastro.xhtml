@@ -19,13 +19,15 @@
 				<div class="form-group row">
 					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label>
 					<div class="col-xs-10">
-						<h:inputText value="#{cadastroPacienteController.paciente.cpfPaciente}" class="form-control" type="text" id="example-text-input" style="width: 50%;" maxlength="11"/>
+						<h:inputText value="#{cadastroPacienteController.paciente.cpfPaciente}" class="form-control" type="text" id="example-text-input" style="width: 50%;" maxlength="11"
+							required="true"/>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="example-search-input" class="col-xs-2 col-form-label">Nome Paciente</label>
 					<div class="col-xs-10">
-						<h:inputText value="#{cadastroPacienteController.paciente.nmPaciente}" class="form-control" id="example-search-input" style="width: 50%;" maxlength="80" />
+						<h:inputText value="#{cadastroPacienteController.paciente.nmPaciente}" class="form-control" id="example-search-input" style="width: 50%;" maxlength="80"
+							required="true" />
 					</div>
 				</div>
 				
