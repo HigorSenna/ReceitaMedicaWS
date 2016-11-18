@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.MediaType;
 
+import org.primefaces.json.JSONObject;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -15,6 +17,7 @@ import enums.TipoMensagemEnum;
 import model.Paciente;
 import utils.JsonUtils;
 import utils.MessagesUtils;
+import utils.ParamUtils;
 import utils.UrlUtils;
 
 @ViewScoped
@@ -45,9 +48,13 @@ public class CadastroPacienteController implements Serializable{
 
 			json = response.getEntity(String.class);
 			System.out.println(json);
+			
+			JSONObject obj = JsonUtils.parseObject(json);
+			
+			MessagesUtils.exibirMensagemRedirect(obj.getString(ParamUtils.MESSAGE), "cadastro.xhtml", TipoMensagemEnum.SUCESSO);
 
 		} catch (Exception e) {
-			MessagesUtils.exibirMensagemRedirect("Falha ao cadastrar médico", "cadastro.xhtml", TipoMensagemEnum.ERRO);
+			MessagesUtils.exibirMensagemRedirect("Falha ao cadastrar paciente", "cadastro.xhtml", TipoMensagemEnum.ERRO);
 		}
 	}
 
