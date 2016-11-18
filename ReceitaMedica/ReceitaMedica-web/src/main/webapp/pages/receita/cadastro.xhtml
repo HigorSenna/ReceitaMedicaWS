@@ -137,7 +137,9 @@
 						
 					</p:dataTable>
 				</div>
-				<h:commandButton class="btn btn-success" value="Cadastrar" id="botaoCadastroReceita" action="#{cadastroReceitaController.salvar()}" />
+				<h:form id="formBotaoCadastrar" prependId="false">
+					<p:commandButton class="btn btn-success" value="Cadastrar" id="botaoCadastroReceita" action="#{cadastroReceitaController.salvar()}" />
+				</h:form>
 		</div>
 			
 	</ui:define>

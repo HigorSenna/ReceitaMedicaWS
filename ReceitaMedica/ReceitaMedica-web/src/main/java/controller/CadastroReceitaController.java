@@ -16,11 +16,15 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import VM.CadastroReceitaVM;
+import enums.StatusReceitaEnum;
+import enums.TipoMensagemEnum;
 import model.ItemReceita;
 import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
+import model.ReciboReceita;
 import utils.JsonUtils;
+import utils.MessagesUtils;
 import utils.ParamUtils;
 import utils.UrlUtils;
 
@@ -101,43 +105,20 @@ public class CadastroReceitaController implements Serializable{
 			} catch (Exception e) {
 				cadastroReceitaVM.setPaciente(new Paciente());
 			}
-		}
-	
+		}	
 	}	
 	
 	public void salvar(){
 		client = Client.create();
-		Medico m = new Medico();
-		m.setCrmMedico("9nfa76");
-		m.setNmMedico("NOME TESTE");
-		
-		Paciente p = new Paciente();
-		p.setCpfPaciente("5924510wq");
-		p.setNmPaciente("PACIENTE TESTE");		
-		
+				
 		ReceitasMedica receita = new ReceitasMedica();		
 		receita.setItensReceitas(new ArrayList<ItemReceita>());
 		
-		receita.setMedico(m);
-		receita.setPaciente(p);
-		
-		ItemReceita item = new ItemReceita();
-		item.setContraIndicacao("Contraindicado em casos de suspetia de dengue");
-		item.setIdItem(0);
-		item.setInstrucao("Duas vezes ao dia");
-		item.setNmReceita("Receita medica");
-		
-		receita.getItensReceitas().add(item);
-		
-		item = new ItemReceita();
-		item.setContraIndicacao("Contraindicacao");
-		item.setIdItem(0);
-		item.setInstrucao("quatro vezes ao dia");
-		item.setNmReceita("Receita medica 2");
-		
-		receita.getItensReceitas().add(item);
-	
-		
+		receita.setItensReceitas(cadastroReceitaVM.getItensReceita());
+		receita.setFlStatus(StatusReceitaEnum.ATIVA.getValor());
+		receita.setMedico(cadastroReceitaVM.getMedico());
+		receita.setPaciente(cadastroReceitaVM.getPaciente());
+				
 		String json = JsonUtils.parseJson(receita);
 		
 		webResource = client.resource(UrlUtils.getURL(CADASTRO_RECEITA));
@@ -145,7 +126,28 @@ public class CadastroReceitaController implements Serializable{
 					.post(ClientResponse.class,json);
 		
 		json = response.getEntity(String.class);
+		JSONObject obj = JsonUtils.parseObject(json);
+		ReciboReceita recibo = new ReciboReceita(
+				obj.getString(ParamUtils.CRM),
+				obj.getString(ParamUtils.CPF),
+				obj.getInt(ParamUtils.NUM_RECEITA),
+				obj.getString(ParamUtils.DATA_RECEITA), 
+				obj.getString(ParamUtils.MSG)
+			);
+
+		MessagesUtils.exibirMensagemRedirect(getMessageRecibo(recibo), "cadastro.xhtml", TipoMensagemEnum.SUCESSO);
 		System.out.println(json);
+	}
+	private String getMessageRecibo(ReciboReceita recibo){
+		StringBuilder sb = new StringBuilder();
+		sb.append("CRM: \n")
+		.append(recibo.getCrmMedico() + "\n")
+		.append("CPF: ")
+		.append(recibo.getCpfPaciente() + "\n")
+		.append("Data: ").append(recibo.getData() + "\n")
+		.append(recibo.getMsg());
+		
+		return sb.toString();
 	}
 
 	public CadastroReceitaVM getCadastroReceitaVM() {

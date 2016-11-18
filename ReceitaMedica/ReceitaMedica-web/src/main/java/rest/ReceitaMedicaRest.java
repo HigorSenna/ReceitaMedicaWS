@@ -169,8 +169,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		}
 		else{
 			JsonObject jobj = new Gson().fromJson(json, JsonObject.class);
-			JsonElement j = jobj.get(ParamUtils.NUM_RECEITA);
-			return j.toString().replace("\"", "");
+			return jobj.toString();
 		}
 	}
 	
