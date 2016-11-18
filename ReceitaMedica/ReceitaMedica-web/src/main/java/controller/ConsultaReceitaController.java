@@ -57,7 +57,6 @@ public class ConsultaReceitaController implements Serializable{
 		JsonObject jo = new JsonObject();
 		jo.addProperty("numReceita", consultaReceitaVM.getNumReceita());
 		
-		
 		webResource = client.resource(UrlUtils.getURL(CANCELAR_RECEITA ));
 		response = webResource.type(MediaType.APPLICATION_JSON)
 					.post(ClientResponse.class,jo.toString());
@@ -97,7 +96,6 @@ public class ConsultaReceitaController implements Serializable{
 			webResource = client.resource(UrlUtils.getURL(CONSULTA_RECEITA_POR_NUMERO));
 			response = webResource.type(MediaType.APPLICATION_JSON)
 						.post(ClientResponse.class,jo.toString());
-				
 			
 				json = response.getEntity(String.class);				
 				System.out.println(json);
@@ -111,18 +109,10 @@ public class ConsultaReceitaController implements Serializable{
 	}
 	
 	private void montarReceitaRetornada(String json){
-		Medico medico = new Medico();
-		Paciente paciente = new Paciente();
-		
 		JSONObject objGeral = JsonUtils.parseObject(json);
 		
-		JSONObject objMedico = objGeral.getJSONObject(ParamUtils.MEDICO);
-		medico.setCrmMedico(objMedico.getString(ParamUtils.CRM));
-		medico.setNmMedico(objMedico.getString(ParamUtils.NOME_MEDICO));
-		
-		JSONObject objPaciente = objGeral.getJSONObject(ParamUtils.PACIENTE);
-		paciente.setCpfPaciente(objPaciente.getString(ParamUtils.CPF));
-		paciente.setNmPaciente(objPaciente.getString(ParamUtils.NOME_PACIENTE));
+		Medico medico = getMedicoJson(objGeral);
+		Paciente paciente = getPacienteJson(objGeral);
 		
 		JSONArray arrayItens = objGeral.getJSONArray(ParamUtils.ITENS_RECEITAS);
 		
@@ -130,16 +120,44 @@ public class ConsultaReceitaController implements Serializable{
 		consultaReceitaVM.getReceita().setPaciente(paciente);
 		
 		for(Object j: arrayItens){
-			JSONObject objeto =(JSONObject) j;
-			ItemReceita item = new ItemReceita();
-			item.setContraIndicacao(objeto.getString(ParamUtils.CONTRA_INDICACAO));
-			item.setRegAnvisa(objeto.getInt(ParamUtils.REG_ANVISA));
-			item.setInstrucao(objeto.getString(ParamUtils.INSTRUCAO));
-			item.setUso(String.valueOf(objeto.getInt(ParamUtils.REG_ANVISA)));
-			item.setNmReceita(objeto.getString(ParamUtils.NM_RECEITA));
+			JSONObject objeto = (JSONObject) j;
 			
+			ItemReceita item = montarItemReceita(objeto);
+		
 			consultaReceitaVM.getItensReceita().add(item);
 		}
+	}
+	
+	private ItemReceita montarItemReceita(JSONObject objeto){
+		ItemReceita item = new ItemReceita();
+		
+		item.setContraIndicacao(objeto.getString(ParamUtils.CONTRA_INDICACAO));
+		item.setRegAnvisa(objeto.getInt(ParamUtils.REG_ANVISA));
+		item.setInstrucao(objeto.getString(ParamUtils.INSTRUCAO));
+		item.setUso(String.valueOf(objeto.getInt(ParamUtils.REG_ANVISA)));
+		item.setNmReceita(objeto.getString(ParamUtils.NM_RECEITA));
+		
+		return item;
+	}
+	
+	private Paciente getPacienteJson(JSONObject objeto){
+		Paciente paciente = new Paciente();
+		
+		JSONObject objPaciente = objeto.getJSONObject(ParamUtils.PACIENTE);
+		paciente.setCpfPaciente(objPaciente.getString(ParamUtils.CPF));
+		paciente.setNmPaciente(objPaciente.getString(ParamUtils.NOME_PACIENTE));
+		
+		return paciente;
+	}
+	
+	private Medico getMedicoJson(JSONObject objeto){
+		Medico medico = new Medico();
+		
+		JSONObject objMedico = objeto.getJSONObject(ParamUtils.MEDICO);
+		medico.setCrmMedico(objMedico.getString(ParamUtils.CRM));
+		medico.setNmMedico(objMedico.getString(ParamUtils.NOME_MEDICO));
+		
+		return medico;
 	}
 
 	public ConsultaReceitaVM getConsultaReceitaVM() {
