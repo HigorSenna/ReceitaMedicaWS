@@ -27,6 +27,7 @@ public abstract class ParamUtils {
 	public static final String REG_ANVISA = "regAnvisa";
 	public static final String NM_RECEITA = "nmReceita";
 	public static final String INSTRUCAO = "instrucao";
+	public static final String ITENS_RECEITAS = "itensReceitas";
 	
 	public static final String MSG= "msg";
 	public static final String MSG_CADASTRO_RECEITA = "Receita médica disponível na base de dados do ministério da saúde";

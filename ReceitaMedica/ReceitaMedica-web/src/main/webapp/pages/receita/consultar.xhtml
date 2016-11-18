@@ -12,74 +12,79 @@
 
 			<h1 style="width: 100%; text-align: center;">Cadastro de Receita Médica</h1>
 
-			<h:form prependId="false" id="formularioCadastroReceitaMedica">
-	
-				<br /> <br /> <br />
-	
-<!-- 				<div class="form-group row"> -->
-<!-- 					<label for="example-text-input" class="col-xs-2 col-form-label">Cpf Paciente</label> -->
-<!-- 					<div class="col-xs-10"> -->
-<!-- 						<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 							id="example-text-input" style="width: 50%;" maxlength="11" /> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="form-group row"> -->
-<!-- 					<label for="example-search-input" class="col-xs-2 col-form-label">CRM Médico</label> -->
-<!-- 					<div class="col-xs-10"> -->
-<!-- 						<h:inputText class="form-control" -->
-<!-- 							value="#{cadastroReceitaController.receitaMedica.medico.crmMedico}" id="example-search-input" style="width: 50%;" maxlength="11"> -->
-							
-<!-- 						</h:inputText> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-				
-				<h:commandButton class="btn btn-success" value="Consultar" id="botaoCadastroReceita" action="#{consultaReceitaController.buscarReceitaPorNumero()}" />
-				<h:commandButton class="btn btn-success" value="Utilizar" id="botaoUtilizarReceita" action="#{consultaReceitaController.utilizarReceita()}" />
-				<h:commandButton class="btn btn-success" value="Cancelar" id="botaoCancelarReceita" action="#{consultaReceitaController.cancelarReceita()}" />
-				<br/>
-				<br/>
-				<br/>
+			<h:form prependId="false" id="formularioConsultaReceitaMedica">
+			
 				<div>
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="numReceitaItem" class="col-xs-2 col-form-label">Numero Receita</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.numReceita}" id="numReceitaItem"  -->
-<!-- 								style="width: 50%;" maxlength="11" disabled="true"> -->
+					<br/>
+					
+					<div class="form-group row">
+						<label for="nomeMedico" class="col-xs-2 col-form-label">Medico</label>
+						<div class="col-xs-10">
+							<h:inputText class="form-control" value="#{consultaReceitaController.consultaReceitaVM.receita.medico.nmMedico}"
+								id="nomeMedico" style="width: 50%;" disabled="true"/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="nomePaciente" class="col-xs-2 col-form-label">Paciente</label>
+						<div class="col-xs-10">
+							<h:inputText class="form-control" value="#{consultaReceitaController.consultaReceitaVM.receita.paciente.nmPaciente}"
+								id="nomePaciente" style="width: 50%;" maxlength="11" disabled="true"/>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label for="numeroReceita" class="col-xs-2 col-form-label">Numero Receita</label>
+						<div class="col-xs-10">
+							<h:inputText class="form-control" value="#{consultaReceitaController.consultaReceitaVM.numReceita}"
+								id="numeroReceita" style="width: 50%;" maxlength="11" required="true"/>
+						</div>
+						
+						<h:commandButton class="btn btn-success" value="Utilizar" id="botaoUtilizarReceita" action="#{consultaReceitaController.utilizarReceita()}" />
+						<h:commandButton class="btn btn-success" value="Cancelar" id="botaoCancelarReceita" action="#{consultaReceitaController.cancelarReceita()}" />
+					</div>					
+				</div>
+						<p:commandButton class="btn btn-success" value="Consultar" id="botaoBucarReceita" action="#{consultaReceitaController.buscarReceitaPorNumero()}" update="medicamentos nomePaciente nomeMedico" />
+				
+				<br/>
+				<br/>
+				<div class="table table-hover">
+					<p:dataTable id="medicamentos" style="margin-bottom:0;margin-top: 5%;margin-left:0%;width:60%;text-align:center;" paginator="true" 
+						rows="10" lazy="false" var="item" value="#{consultaReceitaController.consultaReceitaVM.itensReceita}"						
+						emptyMessage="Nenhum registro encontrado!!"
+						rowsPerPageTemplate="5, 10, 15" paginatorPosition="bottom">
+						
+						<f:facet name="header">
+							Tabela de Medicamentos
+						</f:facet>
+<!-- 						<p:column headerText="Data da compra"> -->
+<!-- 							<h:outputText value=""> -->
+<!-- 								<f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" /> -->
+<!-- 							</h:outputText> -->
+<!-- 						</p:column> -->
+						<p:column headerText="Instrução">
+							<h:outputText value="#{item.instrucao}" />
+						</p:column>
 
-<!-- 							</h:inputText> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="instrucaoItemReceita" class="col-xs-2 col-form-label">Instrucao</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputTextarea class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="instrucaoItemReceita" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="nomeReceita" class="col-xs-2 col-form-label">Nome Receita</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="nomeReceita" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="usoReceita" class="col-xs-2 col-form-label">USO</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="usoReceita" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-					
-<!-- 					<div class="form-group row"> -->
-<!-- 						<label for="contraIndicacao" class="col-xs-2 col-form-label">Contra-Indicação</label> -->
-<!-- 						<div class="col-xs-10"> -->
-<!-- 							<h:inputText class="form-control" value="#{cadastroReceitaController.receitaMedica.paciente.cpfPaciente}" -->
-<!-- 								id="contraIndicacao" style="width: 50%;" maxlength="11" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+						<p:column headerText="Nome da Receita">
+							<h:outputText value="#{item.nmReceita}" />
+						</p:column>
+
+						<p:column headerText="Uso">
+							<h:outputText value="#{item.uso}" />
+						</p:column>
+
+						<p:column headerText="Contra-Indicação">
+							<h:outputText value="#{item.contraIndicacao}" />
+						</p:column>
+						
+						<p:column headerText="Nº Anvisa">
+							<h:outputText value="#{item.regAnvisa}" />
+						</p:column>
+						
+					</p:dataTable>
+				</div>
+				<div>
 				</div>
 			</h:form>
 		</div>
