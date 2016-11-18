@@ -40,8 +40,8 @@
 								id="numeroReceita" style="width: 50%;" maxlength="11" required="true"/>
 						</div>
 						
-						<h:commandButton class="btn btn-success" value="Utilizar" id="botaoUtilizarReceita" action="#{consultaReceitaController.utilizarReceita()}" />
-						<h:commandButton class="btn btn-success" value="Cancelar" id="botaoCancelarReceita" action="#{consultaReceitaController.cancelarReceita()}" />
+						<p:commandButton class="btn btn-success" value="Utilizar" id="botaoUtilizarReceita" action="#{consultaReceitaController.utilizarReceita()}" update="message"/>
+						<p:commandButton class="btn btn-success" value="Cancelar" id="botaoCancelarReceita" action="#{consultaReceitaController.cancelarReceita()}" update="message"/>
 					</div>					
 				</div>
 						<p:commandButton class="btn btn-success" value="Consultar" id="botaoBucarReceita" action="#{consultaReceitaController.buscarReceitaPorNumero()}" update="medicamentos nomePaciente nomeMedico" />

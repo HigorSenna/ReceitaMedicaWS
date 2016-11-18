@@ -18,11 +18,13 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import VM.ConsultaReceitaVM;
+import enums.TipoMensagemEnum;
 import model.ItemReceita;
 import model.Medico;
 import model.Paciente;
 import model.ReceitasMedica;
 import utils.JsonUtils;
+import utils.MessagesUtils;
 import utils.ParamUtils;
 import utils.UrlUtils;
 
@@ -50,17 +52,20 @@ public class ConsultaReceitaController implements Serializable{
 	
 	public void cancelarReceita(){
 		client = Client.create();
-		String numReceita= new String(); 
-		numReceita = "{'numReceita' : '2'}";
-		String json = numReceita;
+		String json = null;
+		
+		JsonObject jo = new JsonObject();
+		jo.addProperty("numReceita", consultaReceitaVM.getNumReceita());
 		
 		
 		webResource = client.resource(UrlUtils.getURL(CANCELAR_RECEITA ));
 		response = webResource.type(MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class,json);
+					.post(ClientResponse.class,jo.toString());
 			
 			json = response.getEntity(String.class);				
 			System.out.println(json);
+			JSONObject obj = JsonUtils.parseObject(json);
+			MessagesUtils.exibirMensagemRedirect(obj.getString(ParamUtils.MESSAGE), "consultar.xhtml", TipoMensagemEnum.ALERTA);
 	}
 	
 	public void utilizarReceita(){
