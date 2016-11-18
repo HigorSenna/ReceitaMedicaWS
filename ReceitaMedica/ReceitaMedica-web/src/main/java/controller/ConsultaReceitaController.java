@@ -70,16 +70,19 @@ public class ConsultaReceitaController implements Serializable{
 	
 	public void utilizarReceita(){
 		client = Client.create();
-		String numReceita= new String(); 
-		numReceita = "{'numReceita' : '1'}";
-		String json = numReceita;
+		String json = null;
+		
+		JsonObject jo = new JsonObject();
+		jo.addProperty("numReceita", consultaReceitaVM.getNumReceita());
 		
 		webResource = client.resource(UrlUtils.getURL(UTILIZAR_RECEITA));
 		response = webResource.type(MediaType.APPLICATION_JSON)
-					.post(ClientResponse.class,json);
+					.post(ClientResponse.class,jo.toString());
 			
-			json = response.getEntity(String.class);				
-			System.out.println(json);
+		json = response.getEntity(String.class);				
+		System.out.println(json);
+		JSONObject obj = JsonUtils.parseObject(json);
+		MessagesUtils.exibirMensagemRedirect(obj.getString(ParamUtils.MESSAGE), "consultar.xhtml", TipoMensagemEnum.ALERTA);
 	}
 	
 		

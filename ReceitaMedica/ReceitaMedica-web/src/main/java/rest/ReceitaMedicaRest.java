@@ -89,12 +89,10 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/utilizarReceita")
 	public MessagesWS utilizarReceita(String numReceita){
+		String valorJson = null;
+		valorJson = validarTipoJson(numReceita);
 		
-		Gson gson = new GsonBuilder().create();
-		String sytr=gson.fromJson(numReceita, String.class);
-		
-		JSONObject obj = JsonUtils.parseObject(sytr);
-		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
+		int numeroReceita = Integer.parseInt(valorJson);
 		
 		try {
 			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
