@@ -50,6 +50,10 @@ public class ConsultaReceitaController implements Serializable{
 		consultaReceitaVM.setItensReceita(new ArrayList<ItemReceita>());
 	}
 	
+	public boolean disableButton(){
+		return consultaReceitaVM.getReceita().getPaciente() == null;
+	}
+	
 	public void cancelarReceita(){
 		client = Client.create();
 		String json = null;
