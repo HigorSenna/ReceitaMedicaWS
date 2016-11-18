@@ -55,7 +55,7 @@ public class ConsultaReceitaController implements Serializable{
 		String json = null;
 		
 		JsonObject jo = new JsonObject();
-		jo.addProperty("numReceita", consultaReceitaVM.getNumReceita());
+		jo.addProperty(ParamUtils.NUM_RECEITA, consultaReceitaVM.getNumReceita());
 		
 		webResource = client.resource(UrlUtils.getURL(CANCELAR_RECEITA ));
 		response = webResource.type(MediaType.APPLICATION_JSON)
@@ -72,7 +72,7 @@ public class ConsultaReceitaController implements Serializable{
 		String json = null;
 		
 		JsonObject jo = new JsonObject();
-		jo.addProperty("numReceita", consultaReceitaVM.getNumReceita());
+		jo.addProperty(ParamUtils.NUM_RECEITA, consultaReceitaVM.getNumReceita());
 		
 		webResource = client.resource(UrlUtils.getURL(UTILIZAR_RECEITA));
 		response = webResource.type(MediaType.APPLICATION_JSON)
@@ -91,7 +91,7 @@ public class ConsultaReceitaController implements Serializable{
 			String json = null;
 			
 			JsonObject jo = new JsonObject();
-			jo.addProperty("numReceita", consultaReceitaVM.getNumReceita());
+			jo.addProperty(ParamUtils.NUM_RECEITA, consultaReceitaVM.getNumReceita());
 			
 			webResource = client.resource(UrlUtils.getURL(CONSULTA_RECEITA_POR_NUMERO));
 			response = webResource.type(MediaType.APPLICATION_JSON)
