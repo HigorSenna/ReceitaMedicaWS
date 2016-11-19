@@ -33,6 +33,11 @@ public abstract class ParamUtils {
 	public static final String MSG= "msg";
 	public static final String MSG_CADASTRO_RECEITA = "Receita médica disponível na base de dados do ministério da saúde";
 	
+	/*farmacia*/
+	
+	public static final String NOME_FARMACIA = "nmFarmacia";
+	public static final String CNPJ_FARMACIA= "cnpjFarmacia";
+	
 	
 	
 }
