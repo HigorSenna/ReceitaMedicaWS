@@ -1,11 +1,22 @@
 package utils;
 
 import enums.TipoUsuarioEnum;
+import model.Farmacia;
 import model.Medico;
 import model.Paciente;
 import model.Usuario;
 
 public abstract class UsuarioUtils {
+	
+	public static Usuario getUsuarioFarmacia(Farmacia farmacia){
+		Usuario usuario = new Usuario();
+		usuario.setLogin(farmacia.getCnpjFarmacia());
+		usuario.setSenha(farmacia.getCnpjFarmacia() + 'F');
+		
+		usuario.setFlTipoUsuario(TipoUsuarioEnum.FARMACIA.getValor());
+		
+		return usuario;
+	}
 	
 	public static Usuario getUsuarioPaciente(Paciente paciente){
 		
