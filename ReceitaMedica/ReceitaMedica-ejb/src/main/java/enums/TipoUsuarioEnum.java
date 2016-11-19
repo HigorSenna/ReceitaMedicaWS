@@ -3,7 +3,8 @@ package enums;
 public enum TipoUsuarioEnum {
 	
 	MEDICO("MEDICO","M"),
-	PACIENTE("PACIENTE","P");
+	PACIENTE("PACIENTE","P"),
+	FARMACIA("FARMACIA","F");
 	
 	private String label;
 	private String valor;
