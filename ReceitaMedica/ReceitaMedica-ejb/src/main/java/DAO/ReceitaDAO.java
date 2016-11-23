@@ -1,5 +1,6 @@
 package DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -19,13 +20,26 @@ public class ReceitaDAO extends GenericoDAO<ReceitasMedica, Integer>{
 		
 		stringBuilder.append("SELECT receita ")
 			.append("FROM ReceitasMedica receita ")
-			.append("WHERE receita.paciente.cpfPaciente = ? ");
+			.append("INNER JOIN FETCH receita.paciente paciente ")			
+			.append("WHERE paciente.cpfPaciente = ? ");
+	
 		
 		Query query = getEntityManager().createQuery(stringBuilder.toString());
 		query.setParameter(1, cpf);
 		
 		try {
-			return (List<ReceitasMedica>) query.getResultList();
+			 List<ReceitasMedica> receitas = query.getResultList();
+			 List<ReceitasMedica> receitasSemItens = new ArrayList<>();
+			 
+			 for(ReceitasMedica receita : receitas){
+				 receita.setItensReceitas(null);
+				 receita.getPaciente().setReceitasMedicas(null);
+				 receita.setMedico(null);
+				 receita.getPaciente().setUsuario(null);
+				 receitasSemItens.add(receita);
+			 }
+			
+			 return receitasSemItens;
 			
 		} catch (NoResultException e) {
 			return null;

@@ -63,12 +63,16 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/buscarReceitasPaciente")
-	public List<ReceitasMedica> getAllReceitasPaciente(String cpf){
+	public String getAllReceitasPaciente(String cpf){
 		String cpfPaciente = JsonUtils.parseObject(cpf).getString(ParamUtils.CPF);
 		
 		try {
-			return receitaService.buscarPorCpfPaciente(cpfPaciente);
+			List<ReceitasMedica> receitas = receitaService.buscarPorCpfPaciente(cpfPaciente);			
+				String json = JsonUtils.parseJson(receitas);
+			
+			return json;
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
