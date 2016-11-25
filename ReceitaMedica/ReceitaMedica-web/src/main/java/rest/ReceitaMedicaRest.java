@@ -95,7 +95,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 				return new MessagesWS("Essa receita ja foi utilizada ou cancelada");
 			}
 			
-			return new MessagesWS("Receita cancelada com aucesso!!");
+			return new MessagesWS("Receita cancelada com sucesso!!");
 		} catch (Exception e) {
 			return new MessagesWS("Falha ao cancelar receita!!");
 		}
