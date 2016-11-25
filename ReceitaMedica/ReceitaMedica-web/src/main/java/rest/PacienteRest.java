@@ -10,8 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
 import org.primefaces.json.JSONObject;
 
 import model.Paciente;
@@ -84,11 +82,5 @@ public class PacienteRest extends Application implements Serializable{
 		paciente.setUsuario(UsuarioUtils.getUsuarioPaciente(paciente));
 		
 		return paciente;
-	}
-	
-	private String getJsonIdentado(Object elemento) throws Exception{
-		ObjectMapper mapper = new ObjectMapper();
-	    mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true); 
-	    return mapper.writeValueAsString(elemento);
 	}
 }

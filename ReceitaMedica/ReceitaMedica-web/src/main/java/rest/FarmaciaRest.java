@@ -13,7 +13,6 @@ import javax.ws.rs.core.MediaType;
 import org.primefaces.json.JSONObject;
 
 import model.Farmacia;
-import model.Medico;
 import service.FarmaciaService;
 import utils.JsonUtils;
 import utils.MessagesWS;
