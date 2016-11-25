@@ -8,11 +8,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
@@ -132,26 +130,6 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 			return false;
 		}
 		return true;
-	}
-	
-	@GET
-	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/buscarReceitaPorNum")
-	public ReceitasMedica buscarPorNum(@QueryParam("numReceita") String nuReceita){
-		JSONObject obj = JsonUtils.parseObject(nuReceita);
-		int numeroReceita = obj.getInt(ParamUtils.NUM_RECEITA);
-		
-		try {
-			receitaMedica = receitaService.buscarPorNumero(numeroReceita);
-			if(receitaMedica != null){
-				List<ItemReceita> itensReceita = itemReceitaService.buscarPorNumReceita(numeroReceita);
-				receitaMedica.setItensReceitas(itensReceita);
-			}
-			
-			return receitaMedica;
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 	@POST
