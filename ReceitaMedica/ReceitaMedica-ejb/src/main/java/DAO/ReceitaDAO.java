@@ -20,7 +20,8 @@ public class ReceitaDAO extends GenericoDAO<ReceitasMedica, Integer>{
 		
 		stringBuilder.append("SELECT receita ")
 			.append("FROM ReceitasMedica receita ")
-			.append("INNER JOIN FETCH receita.paciente paciente ")			
+			.append("INNER JOIN FETCH receita.paciente paciente ")	
+			.append("INNER JOIN FETCH receita.medico medico ")
 			.append("WHERE paciente.cpfPaciente = ? ");
 	
 		
@@ -34,8 +35,9 @@ public class ReceitaDAO extends GenericoDAO<ReceitasMedica, Integer>{
 			 for(ReceitasMedica receita : receitas){
 				 receita.setItensReceitas(null);
 				 receita.getPaciente().setReceitasMedicas(null);
-				 receita.setMedico(null);
 				 receita.getPaciente().setUsuario(null);
+				 receita.getMedico().setReceitasMedicas(null);
+				 receita.getMedico().setUsuario(null);
 				 receitasSemItens.add(receita);
 			 }
 			
