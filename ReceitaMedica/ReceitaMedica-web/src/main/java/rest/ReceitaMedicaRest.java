@@ -25,6 +25,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import enums.StatusItemEnum;
 import enums.StatusReceitaEnum;
 import model.ItemReceita;
 import model.Medico;
@@ -246,6 +247,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 			JSONObject jo = (JSONObject) j;
 			
 			item = new ItemReceita();
+			item.setStatus(StatusItemEnum.ATIVO.getValor());
 			item.setContraIndicacao(jo.getString(ParamUtils.CONTRA_INDICACAO));
 			item.setRegAnvisa(jo.getInt(ParamUtils.REG_ANVISA));
 			item.setInstrucao(jo.getString(ParamUtils.INSTRUCAO));

@@ -29,14 +29,14 @@ public class ItemReceita implements Serializable {
 	
 	@Column(name = "USO")
 	private String uso;
+	
+	@Column(name = "STATUS")
+	private String status;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="NUM_RECEITA")
 	private ReceitasMedica receitasMedica;
-
-	public ItemReceita() {
-	}
 
 	public int getIdItem() {
 		return idItem;
@@ -84,6 +84,14 @@ public class ItemReceita implements Serializable {
 
 	public void setUso(String uso) {
 		this.uso = uso;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public ReceitasMedica getReceitasMedica() {
