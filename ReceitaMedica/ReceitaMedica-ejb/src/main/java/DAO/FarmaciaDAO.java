@@ -5,7 +5,6 @@ import javax.persistence.Query;
 
 import br.com.commons.ejb.dao.GenericoDAO;
 import model.Farmacia;
-import model.Medico;
 
 public class FarmaciaDAO extends GenericoDAO<Farmacia, String>{
 
