@@ -38,6 +38,8 @@ public abstract class ParamUtils {
 	public static final String NOME_FARMACIA = "nmFarmacia";
 	public static final String CNPJ_FARMACIA= "cnpjFarmacia";
 	
-	
+	/*usuario*/
+	public static final String LOGIN= "login";
+	public static final String SENHA = "senha";
 	
 }
