@@ -35,7 +35,7 @@ public class ItemReceita implements Serializable {
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="NUM_RECEITA")
+	@JoinColumn(name="NUM_RECEITA",updatable = false, insertable = false)
 	private ReceitasMedica receitasMedica;
 
 	public int getIdItem() {
