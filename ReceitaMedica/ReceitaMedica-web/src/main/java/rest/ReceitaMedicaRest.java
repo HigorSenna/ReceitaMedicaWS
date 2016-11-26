@@ -67,7 +67,7 @@ public class ReceitaMedicaRest extends Application implements Serializable {
 		
 		try {
 			List<ReceitasMedica> receitas = receitaService.buscarPorCpfPaciente(cpfPaciente);			
-				String json = JsonUtils.parseJsonFormatDate(receitas);
+			String json = JsonUtils.parseJsonFormatDate(receitas);
 			
 			return json;
 		} catch (Exception e) {
