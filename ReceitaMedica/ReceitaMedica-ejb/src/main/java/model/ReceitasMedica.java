@@ -18,8 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 @Entity
 @Table(name="receitas_medicas")
 public class ReceitasMedica implements Serializable {
@@ -36,7 +34,6 @@ public class ReceitasMedica implements Serializable {
 	@Column(name="FL_STATUS")
 	private String flStatus;
 
-	@JsonIgnore
 	@OneToMany(mappedBy="receitasMedica",fetch= FetchType.LAZY)
 	private List<ItemReceita> itensReceitas;
 
