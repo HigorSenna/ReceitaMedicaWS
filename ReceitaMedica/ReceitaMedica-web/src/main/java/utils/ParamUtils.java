@@ -28,6 +28,7 @@ public abstract class ParamUtils {
 	public static final String NM_RECEITA = "nmReceita";
 	public static final String INSTRUCAO = "instrucao";
 	public static final String ITENS_RECEITAS = "itensReceitas";
+	public static final String ID_ITEM = "idItem";
 	
 	/*item receita*/
 	public static final String STATUS = "status";

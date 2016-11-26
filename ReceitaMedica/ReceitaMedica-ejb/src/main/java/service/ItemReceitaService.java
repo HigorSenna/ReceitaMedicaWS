@@ -19,6 +19,15 @@ public class ItemReceitaService implements Serializable{
 	@Inject
 	private ItemReceitaDAO itemReceitaDAO;
 	
+	public void atualizarItem(ItemReceita item) throws Exception{
+		itemReceitaDAO.atualizar(item);
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public ItemReceita buscarPor(int numeroItem) throws Exception{
+		return itemReceitaDAO.buscarPor(numeroItem);
+	}
+	
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<ItemReceita> buscarPorNumReceita(int numReceita) throws Exception{
 		return itemReceitaDAO.buscarPorNumeroReceita(numReceita);
